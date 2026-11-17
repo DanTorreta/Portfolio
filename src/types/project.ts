@@ -109,4 +109,28 @@ export interface Project {
     githubUrl?: string;
     docsUrl?: string;
   };
+
+  // Ingeniería y Arquitectura de Sistemas
+  architecture?: {
+    topology: {
+      id: string;
+      label: string;
+      role: string;
+      technology: string;
+      detail: string;
+      status?: 'active' | 'cached' | 'worker';
+    }[];
+    dataFlow: {
+      from: string;
+      to: string;
+      protocol: string;
+    }[];
+    tradeoffs: {
+      choice: string;
+      why: string;
+      discardedAlternative: string;
+      costLatencyNotes: string;
+    }[];
+    securityAndHardening: string[];
+  };
 }

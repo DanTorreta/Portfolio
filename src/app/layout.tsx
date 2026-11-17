@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import Navbar from "@/components/Navbar";
+import AppProviders from "@/components/AppProviders";
 import Footer from "@/components/Footer";
 import { FOUNDER_PROFILE } from "@/data/projects";
 
@@ -50,9 +50,10 @@ export default function RootLayout({
         />
       </head>
       <body className="min-h-screen flex flex-col bg-[#050505] text-zinc-300 font-sans antialiased selection:bg-[#00FF94] selection:text-black">
-        <Navbar />
-        <main className="flex-1">{children}</main>
-        <Footer />
+        <AppProviders>
+          <main className="flex-1">{children}</main>
+          <Footer />
+        </AppProviders>
       </body>
     </html>
   );

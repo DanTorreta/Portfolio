@@ -1,6 +1,15 @@
-"use client";
+'use client';
 
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef } from 'react';
+
+interface Shockwave {
+  x: number;
+  y: number;
+  radius: number;
+  maxRadius: number;
+  alpha: number;
+  strength: number;
+}
 
 export default function KineticCanvas() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -9,7 +18,7 @@ export default function KineticCanvas() {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    const ctx = canvas.getContext("2d", { alpha: true });
+    const ctx = canvas.getContext('2d', { alpha: true });
     if (!ctx) return;
 
     let animationFrameId: number;
@@ -23,12 +32,14 @@ export default function KineticCanvas() {
       y: -1000,
       targetX: -1000,
       targetY: -1000,
-      radius: 180,
+      radius: 200,
       active: false,
     };
 
-    // Grid config
-    const spacing = 38;
+    let shockwaves: Shockwave[] = [];
+
+    // Grid configuration
+    const spacing = 36;
     interface Point {
       originX: number;
       originY: number;
@@ -52,6 +63,7 @@ export default function KineticCanvas() {
         for (let c = 0; c < cols; c++) {
           const originX = c * spacing;
           const originY = r * spacing;
+          const isMajor = (c % 2 === 0 && r % 2 === 0);
           points.push({
             originX,
             originY,
@@ -59,8 +71,8 @@ export default function KineticCanvas() {
             y: originY,
             vx: 0,
             vy: 0,
-            size: 1.2,
-            baseAlpha: (originX % 76 === 0 && originY % 76 === 0) ? 0.22 : 0.08,
+            size: isMajor ? 1.4 : 0.9,
+            baseAlpha: isMajor ? 0.22 : 0.08,
             glow: 0,
           });
         }
@@ -83,7 +95,7 @@ export default function KineticCanvas() {
     };
 
     resize();
-    window.addEventListener("resize", resize);
+    window.addEventListener('resize', resize);
 
     const onMouseMove = (e: MouseEvent) => {
       const rect = canvas.getBoundingClientRect();
@@ -98,43 +110,86 @@ export default function KineticCanvas() {
       mouse.active = false;
     };
 
-    window.addEventListener("mousemove", onMouseMove);
-    document.addEventListener("mouseleave", onMouseLeave);
+    const onClick = (e: MouseEvent) => {
+      const rect = canvas.getBoundingClientRect();
+      const clickX = e.clientX - rect.left;
+      const clickY = e.clientY - rect.top;
+
+      shockwaves.push({
+        x: clickX,
+        y: clickY,
+        radius: 0,
+        maxRadius: 280,
+        alpha: 0.6,
+        strength: 22,
+      });
+    };
+
+    window.addEventListener('mousemove', onMouseMove);
+    document.addEventListener('mouseleave', onMouseLeave);
+    window.addEventListener('click', onClick);
 
     // Render loop
     const render = () => {
       // Smooth damp mouse position
-      mouse.x += (mouse.targetX - mouse.x) * 0.12;
-      mouse.y += (mouse.targetY - mouse.y) * 0.12;
+      mouse.x += (mouse.targetX - mouse.x) * 0.14;
+      mouse.y += (mouse.targetY - mouse.y) * 0.14;
 
       ctx.clearRect(0, 0, width, height);
+
+      // Update shockwaves
+      for (let s = shockwaves.length - 1; s >= 0; s--) {
+        const sw = shockwaves[s];
+        sw.radius += 8;
+        sw.alpha = Math.max(0, 0.6 * (1 - sw.radius / sw.maxRadius));
+
+        if (sw.radius >= sw.maxRadius) {
+          shockwaves.splice(s, 1);
+        }
+      }
 
       const len = points.length;
       for (let i = 0; i < len; i++) {
         const p = points[i];
 
-        // Magnetic displacement calculation
+        // 1. Mouse magnetic displacement
         const dx = mouse.x - p.originX;
         const dy = mouse.y - p.originY;
         const dist = Math.sqrt(dx * dx + dy * dy);
 
         if (dist < mouse.radius && mouse.active) {
-          const force = (1 - dist / mouse.radius);
-          // Gently push or pull based on radius
+          const force = 1 - dist / mouse.radius;
           const angle = Math.atan2(dy, dx);
-          const pushDistance = force * 24;
+          const pushDistance = force * 28;
 
           const targetX = p.originX - Math.cos(angle) * pushDistance;
           const targetY = p.originY - Math.sin(angle) * pushDistance;
 
-          p.vx += (targetX - p.x) * 0.2;
-          p.vy += (targetY - p.y) * 0.2;
-          p.glow = Math.min(p.glow + 0.1, 1);
+          p.vx += (targetX - p.x) * 0.22;
+          p.vy += (targetY - p.y) * 0.22;
+          p.glow = Math.min(p.glow + 0.12, 1);
         } else {
-          // Return spring to origin
+          // Spring back to origin
           p.vx += (p.originX - p.x) * 0.08;
           p.vy += (p.originY - p.y) * 0.08;
           p.glow = Math.max(p.glow - 0.02, 0);
+        }
+
+        // 2. Shockwave interaction
+        for (let s = 0; s < shockwaves.length; s++) {
+          const sw = shockwaves[s];
+          const sdx = p.x - sw.x;
+          const sdy = p.y - sw.y;
+          const sdist = Math.sqrt(sdx * sdx + sdy * sdy);
+          const waveDist = Math.abs(sdist - sw.radius);
+
+          if (waveDist < 30) {
+            const waveForce = (1 - waveDist / 30) * (sw.strength * (1 - sw.radius / sw.maxRadius));
+            const angle = Math.atan2(sdy, sdx);
+            p.vx += Math.cos(angle) * waveForce * 0.3;
+            p.vy += Math.sin(angle) * waveForce * 0.3;
+            p.glow = Math.min(p.glow + 0.4, 1);
+          }
         }
 
         p.vx *= 0.78; // Damping
@@ -142,20 +197,34 @@ export default function KineticCanvas() {
         p.x += p.vx;
         p.y += p.vy;
 
-        // Render point
+        // Render dot
         ctx.beginPath();
-        const currentSize = p.size + p.glow * 1.5;
+        const currentSize = p.size + p.glow * 1.6;
         ctx.arc(p.x, p.y, currentSize, 0, Math.PI * 2);
 
         if (p.glow > 0.05) {
-          ctx.fillStyle = `rgba(0, 255, 148, ${p.baseAlpha + p.glow * 0.7})`;
-          ctx.shadowColor = "#00FF94";
-          ctx.shadowBlur = 8 * p.glow;
+          ctx.fillStyle = `rgba(0, 255, 148, ${Math.min(1, p.baseAlpha + p.glow * 0.7)})`;
+          ctx.shadowColor = '#00FF94';
+          ctx.shadowBlur = 10 * p.glow;
         } else {
           ctx.fillStyle = `rgba(255, 255, 255, ${p.baseAlpha})`;
           ctx.shadowBlur = 0;
         }
         ctx.fill();
+      }
+
+      // Render shockwave rings
+      for (let s = 0; s < shockwaves.length; s++) {
+        const sw = shockwaves[s];
+        ctx.save();
+        ctx.beginPath();
+        ctx.arc(sw.x, sw.y, sw.radius, 0, Math.PI * 2);
+        ctx.strokeStyle = `rgba(0, 255, 148, ${sw.alpha * 0.5})`;
+        ctx.lineWidth = 1.5;
+        ctx.shadowColor = '#00FF94';
+        ctx.shadowBlur = 12;
+        ctx.stroke();
+        ctx.restore();
       }
 
       animationFrameId = requestAnimationFrame(render);
@@ -165,16 +234,17 @@ export default function KineticCanvas() {
 
     return () => {
       cancelAnimationFrame(animationFrameId);
-      window.removeEventListener("resize", resize);
-      window.removeEventListener("mousemove", onMouseMove);
-      document.removeEventListener("mouseleave", onMouseLeave);
+      window.removeEventListener('resize', resize);
+      window.removeEventListener('mousemove', onMouseMove);
+      document.removeEventListener('mouseleave', onMouseLeave);
+      window.removeEventListener('click', onClick);
     };
   }, []);
 
   return (
     <canvas
       ref={canvasRef}
-      className="absolute inset-0 pointer-events-none z-0 opacity-70"
+      className="absolute inset-0 pointer-events-none z-0 opacity-80"
     />
   );
 }

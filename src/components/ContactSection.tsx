@@ -1,21 +1,40 @@
-"use client";
+'use client';
 
-import React, { useState } from "react";
-import { Mail, Phone, MapPin, Send, Check, Terminal, Sparkles, ArrowUpRight } from "lucide-react";
-import { PROJECTS_DATA, FOUNDER_PROFILE } from "@/data/projects";
-import MagneticButton from "./MagneticButton";
+import React, { useState, useEffect } from 'react';
+import { Mail, Phone, MapPin, Send, Check, Terminal, Copy } from 'lucide-react';
+import { PROJECTS_DATA, FOUNDER_PROFILE } from '@/data/projects';
+import MagneticButton from './MagneticButton';
 
-export default function ContactSection() {
-  const [selectedProject, setSelectedProject] = useState<string>("crold-saas");
-  const [name, setName] = useState<string>("");
-  const [email, setEmail] = useState<string>("");
-  const [message, setMessage] = useState<string>("");
+interface ContactSectionProps {
+  initialSubject?: string;
+}
+
+export default function ContactSection({ initialSubject }: ContactSectionProps) {
+  const [selectedProject, setSelectedProject] = useState<string>('Propuesta General / Ingeniería');
+  const [name, setName] = useState<string>('');
+  const [email, setEmail] = useState<string>('');
+  const [message, setMessage] = useState<string>('');
   const [submitted, setSubmitted] = useState<boolean>(false);
+  const [copiedEmail, setCopiedEmail] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (initialSubject) {
+      setSelectedProject(initialSubject);
+    }
+  }, [initialSubject]);
+
+  const handleCopyEmail = async (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    await navigator.clipboard.writeText(FOUNDER_PROFILE.email);
+    setCopiedEmail(true);
+    setTimeout(() => setCopiedEmail(false), 2000);
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const mailtoSubject = encodeURIComponent(`[PORTFOLIO CONTACT] Proyecto: ${selectedProject} - De: ${name}`);
-    const mailtoBody = encodeURIComponent(`Hola Daniel,\n\nSoy ${name} (${email}).\n\nEstoy interesado en tu proyecto "${selectedProject}".\n\nMensaje:\n${message}\n\nUn saludo cordial.`);
+    const mailtoSubject = encodeURIComponent(`[PORTFOLIO CONTACT] Asunto: ${selectedProject} - De: ${name}`);
+    const mailtoBody = encodeURIComponent(`Hola Daniel,\n\nSoy ${name} (${email}).\n\nEstoy interesado en: "${selectedProject}".\n\nMensaje:\n${message}\n\nUn saludo cordial.`);
     window.location.href = `mailto:${FOUNDER_PROFILE.email}?subject=${mailtoSubject}&body=${mailtoBody}`;
     setSubmitted(true);
   };
@@ -31,30 +50,50 @@ export default function ContactSection() {
               <Terminal className="w-3.5 h-3.5" />
               <span>DIRECT INQUIRY // DANIEL MARTÍNEZ MIRA</span>
             </div>
-            <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tightest uppercase leading-tight mb-4">
-              ¿Hablamos sobre un proyecto o acuerdo comercial?
+            <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tightest uppercase leading-tight mb-4 font-sans">
+              ¿Hablamos sobre un proyecto o posición técnica?
             </h2>
             <p className="text-sm sm:text-base text-zinc-400 leading-relaxed font-sans">
-              Tanto si deseas adquirir la licencia o el código fuente de alguna de las aplicaciones, como si necesitas un ingeniero de software con perfil Full-Stack e IA para una posición estratégica o proyecto a medida, contáctame directamente:
+              Disponible para <strong>contratación en roles Senior / Mid-Senior</strong>, proyectos de alta exigencia técnica o adquisición y licenciamiento de cualquiera de mis 7 productos.
             </p>
           </div>
 
           <div className="space-y-3 font-mono text-xs">
-            {/* Email */}
-            <a
-              href={`mailto:${FOUNDER_PROFILE.email}`}
-              className="flex items-center gap-4 p-4 rounded-2xl bg-[#09090B]/80 border border-white/[0.08] hover:border-[#00FF94]/50 transition-colors group"
-            >
-              <div className="w-10 h-10 rounded-xl bg-white/[0.04] border border-white/[0.08] flex items-center justify-center text-[#00FF94] group-hover:scale-105 transition-transform">
-                <Mail className="w-4 h-4" />
-              </div>
-              <div>
-                <p className="text-[10px] text-zinc-500 uppercase tracking-widest">CORREO DIRECTO</p>
-                <p className="text-sm font-semibold text-white group-hover:text-[#00FF94] transition-colors">
-                  {FOUNDER_PROFILE.email}
-                </p>
-              </div>
-            </a>
+            {/* Email with Instant Copy Action */}
+            <div className="flex items-center justify-between p-4 rounded-2xl bg-[#09090B]/80 border border-white/[0.08] hover:border-[#00FF94]/50 transition-colors group">
+              <a
+                href={`mailto:${FOUNDER_PROFILE.email}`}
+                className="flex items-center gap-4 flex-1 min-w-0"
+              >
+                <div className="w-10 h-10 rounded-xl bg-white/[0.04] border border-white/[0.08] flex items-center justify-center text-[#00FF94] group-hover:scale-105 transition-transform shrink-0">
+                  <Mail className="w-4 h-4" />
+                </div>
+                <div className="min-w-0">
+                  <p className="text-[10px] text-zinc-500 uppercase tracking-widest">CORREO DIRECTO</p>
+                  <p className="text-xs sm:text-sm font-semibold text-white group-hover:text-[#00FF94] transition-colors truncate">
+                    {FOUNDER_PROFILE.email}
+                  </p>
+                </div>
+              </a>
+
+              <button
+                onClick={handleCopyEmail}
+                className="shrink-0 px-2.5 py-1.5 rounded-lg border border-white/10 bg-white/5 hover:bg-white/10 text-[10px] font-mono text-zinc-300 hover:text-white transition-colors flex items-center gap-1.5 ml-2"
+                title="Copiar email al portapapeles"
+              >
+                {copiedEmail ? (
+                  <>
+                    <Check className="w-3 h-3 text-[#00FF94]" />
+                    <span className="text-[#00FF94] font-bold">COPIADO</span>
+                  </>
+                ) : (
+                  <>
+                    <Copy className="w-3 h-3 text-zinc-400" />
+                    <span>COPIAR</span>
+                  </>
+                )}
+              </button>
+            </div>
 
             {/* Phone */}
             <a
@@ -88,7 +127,7 @@ export default function ContactSection() {
 
           <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/[0.06] text-xs font-mono text-zinc-400 flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-[#00FF94] animate-pulse" />
-            <span>RESPUESTA HABITUAL: &lt; 24 HORAS LABORABLES</span>
+            <span>DISPONIBILIDAD INMEDIATA • RESPUESTA &lt; 24H</span>
           </div>
         </div>
 
@@ -121,7 +160,7 @@ export default function ContactSection() {
               {/* Project selector */}
               <div>
                 <label className="block text-zinc-400 mb-2">
-                  01 // PROYECTO O MATERIA DE INTERÉS
+                  01 // ASUNTO O PROYECTO DE INTERÉS
                 </label>
                 <select
                   value={selectedProject}
@@ -129,9 +168,12 @@ export default function ContactSection() {
                   className="w-full px-4 py-3 rounded-xl bg-[#050505] text-white border border-white/[0.08] focus:outline-none focus:border-[#00FF94] text-xs font-mono"
                 >
                   <option value="Propuesta General / Ingeniería">Propuesta General / Contratación de Ingeniería</option>
+                  <option value="Propuesta de Contratación / Empleo">Propuesta de Contratación / Empleo Full-Time</option>
+                  <option value="Adquisición de Software / Licencia">Adquisición de Software / Licenciamiento</option>
+                  <option value="Consultoría Técnica">Consultoría de Arquitectura y Rendimiento</option>
                   {PROJECTS_DATA.map((p) => (
                     <option key={p.id} value={p.title}>
-                      {p.title} ({p.category})
+                      Proyecto: {p.title} ({p.category})
                     </option>
                   ))}
                 </select>
@@ -145,7 +187,7 @@ export default function ContactSection() {
                 <input
                   type="text"
                   required
-                  placeholder="Ej. Roberto Gómez o Acme Industrial"
+                  placeholder="Ej. Roberto Gómez o Acme Corp"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   className="w-full px-4 py-3 rounded-xl bg-[#050505] text-white border border-white/[0.08] focus:outline-none focus:border-[#00FF94] text-xs font-mono placeholder-zinc-700"
@@ -170,12 +212,12 @@ export default function ContactSection() {
               {/* Message */}
               <div>
                 <label className="block text-zinc-400 mb-2">
-                  04 // DETALLES DE LA PROPUESTA / ADQUISICIÓN
+                  04 // DETALLES DE LA PROPUESTA
                 </label>
                 <textarea
                   rows={4}
                   required
-                  placeholder="Describe si te interesa la compra del código, licenciamiento marca blanca o una demo técnica..."
+                  placeholder="Describe la posición técnica, consulta arquitectónica o términos del acuerdo..."
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
                   className="w-full px-4 py-3 rounded-xl bg-[#050505] text-white border border-white/[0.08] focus:outline-none focus:border-[#00FF94] text-xs font-mono placeholder-zinc-700 resize-none"

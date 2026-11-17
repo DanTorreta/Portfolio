@@ -5,17 +5,22 @@ import Link from "next/link";
 import Image from "next/image";
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from "framer-motion";
 import { FOUNDER_PROFILE } from "@/data/projects";
-import { Menu, X, ArrowUpRight, Terminal } from "lucide-react";
+import { Menu, X, ArrowUpRight, Terminal, Command } from "lucide-react";
+import LiveFPSMonitor from "@/components/LiveFPSMonitor";
 
 const NAV_ITEMS = [
   { id: "proyectos", label: "PROYECTOS" },
   { id: "experiencia", label: "EXPERIENCIA" },
   { id: "stack", label: "STACK & ARQUITECTURA" },
-  { id: "monetizacion", label: "MONETIZACIÓN" },
+  { id: "filosofia-producto", label: "PRODUCT MINDSET" },
   { id: "contacto", label: "CONTACTO" },
 ];
 
-export default function Navbar() {
+interface NavbarProps {
+  onOpenCommandPalette?: () => void;
+}
+
+export default function Navbar({ onOpenCommandPalette }: NavbarProps) {
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState("proyectos");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -112,12 +117,24 @@ export default function Navbar() {
             })}
           </nav>
 
-          {/* Right Action: Status Pill + CV */}
-          <div className="flex items-center gap-2.5">
-            <div className="hidden lg:flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/[0.03] border border-white/[0.06] text-[10px] font-mono text-zinc-400">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#00FF94] shadow-[0_0_8px_#00FF94]" />
-              <span>PATERNA // 120 FPS</span>
+          {/* Right Action: Status Pill + FPS Telemetry + Command Palette + CV */}
+          <div className="flex items-center gap-2">
+            {/* Real-time FPS Telemetry */}
+            <div className="hidden lg:flex items-center">
+              <LiveFPSMonitor />
             </div>
+
+            {/* Quick Command Palette Button */}
+            {onOpenCommandPalette && (
+              <button
+                onClick={onOpenCommandPalette}
+                className="hidden sm:flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.1] text-[11px] font-mono text-zinc-300 hover:text-white transition-colors"
+                title="Abrir paleta de comandos (Cmd+K o Ctrl+K)"
+              >
+                <Command className="w-3 h-3 text-accent" />
+                <span className="text-[10px] text-zinc-400">⌘K</span>
+              </button>
+            )}
 
             <a
               href={FOUNDER_PROFILE.cvUrl}

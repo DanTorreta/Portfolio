@@ -189,6 +189,41 @@ export const PROJECTS_DATA: Project[] = [
       liveUrl: "https://crold.vercel.app",
       demoUrl: "https://demo.crold.vercel.app",
       githubUrl: "https://github.com/dani/crold"
+    },
+    architecture: {
+      topology: [
+        { id: "client", label: "PWA Offline-First", role: "Frontend & Local Cache", technology: "Next.js 14 / Workbox", detail: "Service Worker con cache runtime para fichajes de operarios en fosos o talleres sin cobertura 4G/5G.", status: "active" },
+        { id: "edge", label: "Vercel Edge Gateway", role: "Routing & Auth Guard", technology: "Edge Middleware", detail: "Verificación de tokens JWT y enrutamiento dinámico según el subdominio del taller (multi-tenant tenant isolation).", status: "cached" },
+        { id: "api", label: "Edge Functions API", role: "Business Services", technology: "Next.js Server Actions", detail: "Procesamiento de órdenes de reparación, cálculo de márgenes y generación PDF de presupuestos en streaming.", status: "active" },
+        { id: "db", label: "PostgreSQL Multi-Tenant", role: "Primary Datastore", technology: "Supabase + RLS", detail: "Aislamiento a nivel de fila por empresa (organization_id). Cero riesgo de fuga de datos entre talleres clientes.", status: "cached" },
+        { id: "workers", label: "WhatsApp & Notificaciones", role: "Event Dispatcher", technology: "Edge Cron & Webhooks", detail: "Disparo automático de recordatorios de cita previa y alertas de inspección técnica vencida.", status: "worker" }
+      ],
+      dataFlow: [
+        { from: "client", to: "edge", protocol: "HTTPS / TLS 1.3" },
+        { from: "edge", to: "api", protocol: "Internal RPC" },
+        { from: "api", to: "db", protocol: "Pooled Postgres / TCP" },
+        { from: "api", to: "workers", protocol: "Async Event Webhooks" }
+      ],
+      tradeoffs: [
+        {
+          choice: "Next.js Server Actions + PostgreSQL RLS vs Backend dedicado en Express",
+          why: "Elimina la necesidad de mantener un servidor Node.js 24/7. Coste $0 de infraestructura en reposo y tipado end-to-end de base de datos a interfaz.",
+          discardedAlternative: "Servidor VPS con Express y base de datos local que requería parches manuales de seguridad y coste de hosting fijo de 40€/mes.",
+          costLatencyNotes: "p95 de lectura: 42ms. Coste operativo: $0/mes en fase MVP hasta superar los 50.000 usuarios activos."
+        },
+        {
+          choice: "Service Workers con IndexedDB para fichaje offline vs Conexión síncrona obligatoria",
+          why: "Los mecánicos en talleres subterráneos sufren caídas de red frecuentes. Los fichajes se almacenan localmente y se sincronizan con UUID idempotente al recuperar señal.",
+          discardedAlternative: "Bloqueo de la interfaz ante pérdida de conexión que provocaba registros duplicados y quejas de operarios.",
+          costLatencyNotes: "Sincronización en segundo plano con backoff exponencial. Cero pérdida de registros laborales."
+        }
+      ],
+      securityAndHardening: [
+        "Row Level Security (RLS) habilitada en el 100% de las tablas relacionales para aislamiento multi-tenant.",
+        "Cookies httpOnly con directivas SameSite=Strict y protección CSRF nativa en todas las mutaciones.",
+        "Validación estricta de esquemas Zod en cliente y servidor para evitar inyección de datos arbitrarios.",
+        "Exportación y backup diario automático de base de datos cifrado en reposo con AES-256."
+      ]
     }
   },
   {
