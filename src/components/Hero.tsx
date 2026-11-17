@@ -1,136 +1,229 @@
+"use client";
+
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Download, Sparkles, MapPin, Briefcase, GraduationCap, Code2, TrendingUp, ShieldCheck, ExternalLink } from "lucide-react";
+import { motion } from "framer-motion";
+import { ArrowRight, Download, Terminal, Cpu, Database, Sparkles, MapPin, CheckCircle2 } from "lucide-react";
+import KineticCanvas from "./KineticCanvas";
+import MagneticButton from "./MagneticButton";
 import { FOUNDER_PROFILE } from "@/data/projects";
 
 export default function Hero() {
+  // Staggered mask animation variants
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.12,
+        delayChildren: 0.2,
+      },
+    },
+  };
+
+  const lineVariants = {
+    hidden: { y: "100%", opacity: 0 },
+    visible: {
+      y: "0%",
+      opacity: 1,
+      transition: {
+        duration: 0.85,
+        ease: [0.16, 1, 0.3, 1] as const,
+      },
+    },
+  };
+
+  const fadeVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.8,
+        ease: [0.16, 1, 0.3, 1] as const,
+      },
+    },
+  };
+
   return (
-    <section className="relative pt-12 pb-20 md:pt-16 md:pb-28 overflow-hidden">
-      {/* Background glow effects */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[650px] h-[380px] bg-indigo-600/15 rounded-full blur-[130px] pointer-events-none" />
-      <div className="absolute top-1/3 right-1/4 w-[350px] h-[280px] bg-cyan-500/10 rounded-full blur-[100px] pointer-events-none" />
-      
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="text-center max-w-4xl mx-auto">
-          
-          {/* Avatar & Real Profile Photo */}
-          <div className="relative inline-block mb-6">
-            <div className="relative w-28 h-28 sm:w-32 sm:h-32 mx-auto rounded-full p-[3px] bg-gradient-to-tr from-indigo-500 via-cyan-400 to-emerald-400 shadow-2xl shadow-indigo-500/30">
-              <div className="relative w-full h-full rounded-full overflow-hidden bg-slate-900 border-2 border-[#090d16]">
+    <section className="relative min-h-[92vh] flex flex-col justify-center pt-28 pb-16 overflow-hidden border-b border-white/[0.06]">
+      {/* 120 FPS Interactive Kinetic Canvas */}
+      <KineticCanvas />
+
+      {/* Subtle hairline background grid */}
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_40%,#000_70%,transparent_100%)] pointer-events-none" />
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full relative z-10">
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center"
+        >
+          {/* Left Column: Typographic & Asymmetric Content */}
+          <div className="lg:col-span-7 flex flex-col items-start">
+            
+            {/* System Status Pill */}
+            <motion.div variants={fadeVariants} className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/[0.03] border border-white/[0.08] backdrop-blur-md mb-6">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#00FF94] opacity-75" />
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-[#00FF94]" />
+              </span>
+              <span className="text-[11px] font-mono tracking-widest text-zinc-300 uppercase">
+                SYSTEM // READY TO COMMERCIALIZE
+              </span>
+              <span className="text-zinc-600 font-mono">|</span>
+              <span className="text-[10px] font-mono text-[#00FF94]">100% MONETIZABLE APPS</span>
+            </motion.div>
+
+            {/* Mask Reveal Headline */}
+            <div className="overflow-hidden mb-2">
+              <motion.h1
+                variants={lineVariants}
+                className="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tightest text-white uppercase leading-none"
+              >
+                Daniel Martínez
+              </motion.h1>
+            </div>
+
+            <div className="overflow-hidden mb-6">
+              <motion.div
+                variants={lineVariants}
+                className="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tightest leading-tight text-transparent bg-clip-text bg-gradient-to-r from-zinc-200 via-white to-zinc-400"
+              >
+                Software Engineer <span className="text-[#00FF94]">&amp;</span> Builder.
+              </motion.div>
+            </div>
+
+            {/* Technical Sub-deck */}
+            <motion.p
+              variants={fadeVariants}
+              className="text-sm sm:text-base lg:text-lg text-zinc-400 leading-relaxed max-w-2xl mb-8 font-sans"
+            >
+              Especialista en arquitecturas web full-stack, sistemas embebidos de alta precisión y flujos agénticos autónomos con IA. Cada proyecto cuenta con un análisis exhaustivo de <span className="text-white font-medium">problema real</span>, <span className="text-white font-medium">público objetivo</span>, <span className="text-[#00FF94] font-medium">viabilidad comercial</span> y <span className="text-white font-medium">arquitectura de código</span>.
+            </motion.p>
+
+            {/* Action Bar with Magnetic Button */}
+            <motion.div variants={fadeVariants} className="flex flex-wrap items-center gap-4 w-full sm:w-auto mb-10">
+              <MagneticButton>
+                <Link
+                  href="#proyectos"
+                  className="inline-flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-full font-mono text-xs font-bold tracking-wider bg-[#00FF94] text-black hover:bg-[#5CFFB8] transition-all duration-200 shadow-[0_0_30px_rgba(0,255,148,0.35)] hover:shadow-[0_0_40px_rgba(0,255,148,0.55)] group"
+                >
+                  <span>EXPLORAR CATÁLOGO DE APPS</span>
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </Link>
+              </MagneticButton>
+
+              <MagneticButton>
+                <a
+                  href={FOUNDER_PROFILE.cvUrl}
+                  download="CV_Daniel_Martinez_Mira.pdf"
+                  className="inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-full font-mono text-xs font-medium tracking-wider bg-white/[0.04] text-zinc-200 hover:text-white border border-white/[0.1] hover:border-white/[0.25] backdrop-blur-md transition-all duration-200"
+                >
+                  <Download className="w-3.5 h-3.5 text-[#00FF94]" />
+                  <span>DESCARGAR CV (.PDF)</span>
+                </a>
+              </MagneticButton>
+
+              <Link
+                href="#monetizacion"
+                className="inline-flex items-center gap-1.5 text-xs font-mono tracking-wider text-zinc-400 hover:text-[#00FF94] transition-colors py-2 px-1"
+              >
+                <span>// COMPRA & TRASPASO</span>
+                <span className="text-[#00FF94]">→</span>
+              </Link>
+            </motion.div>
+
+            {/* Micro Specs Ticker */}
+            <motion.div variants={fadeVariants} className="flex flex-wrap items-center gap-y-2 gap-x-6 text-[11px] font-mono text-zinc-500 pt-4 border-t border-white/[0.08] w-full">
+              <div className="flex items-center gap-1.5">
+                <span className="text-[#00FF94]">01</span>
+                <span>CLEAN ARCHITECTURE</span>
+              </div>
+              <div className="flex items-center gap-1.5">
+                <span className="text-[#00FF94]">02</span>
+                <span>SSG &amp; EDGE OPTIMIZED</span>
+              </div>
+              <div className="flex items-center gap-1.5">
+                <span className="text-[#00FF94]">03</span>
+                <span>BALIZAS EMBEBIDAS &amp; IA</span>
+              </div>
+            </motion.div>
+
+          </div>
+
+          {/* Right Column: Architectural Identity Frame (Editorial Artifact) */}
+          <motion.div
+            variants={fadeVariants}
+            className="lg:col-span-5 relative flex justify-center"
+          >
+            {/* Corner Crosshairs */}
+            <div className="w-full max-w-sm relative p-5 rounded-3xl bg-[#09090B]/80 backdrop-blur-xl border border-white/[0.08] shadow-[0_20px_50px_rgba(0,0,0,0.8)] group">
+              
+              {/* Technical crosshairs on corners */}
+              <span className="absolute top-2 left-2 text-[10px] font-mono text-zinc-600 select-none">+</span>
+              <span className="absolute top-2 right-2 text-[10px] font-mono text-zinc-600 select-none">+</span>
+              <span className="absolute bottom-2 left-2 text-[10px] font-mono text-zinc-600 select-none">+</span>
+              <span className="absolute bottom-2 right-2 text-[10px] font-mono text-zinc-600 select-none">+</span>
+
+              {/* Top metadata line */}
+              <div className="flex items-center justify-between text-[10px] font-mono text-zinc-400 pb-3 mb-3 border-b border-white/[0.06]">
+                <span className="flex items-center gap-1.5">
+                  <Terminal className="w-3 h-3 text-[#00FF94]" />
+                  <span>ID // DANIEL_M_MIRA</span>
+                </span>
+                <span className="text-zinc-500">VALENCIA, ES</span>
+              </div>
+
+              {/* Photo Viewport */}
+              <div className="relative aspect-[4/5] w-full rounded-2xl overflow-hidden bg-black/80 border border-white/[0.08] mb-4">
                 <Image
                   src={FOUNDER_PROFILE.photoUrl}
                   alt={FOUNDER_PROFILE.name}
                   fill
                   priority
-                  className="object-cover object-top scale-105"
-                  sizes="(max-width: 768px) 128px, 128px"
+                  className="object-cover object-top filter grayscale contrast-110 group-hover:grayscale-0 transition-all duration-700 ease-out"
+                  sizes="(max-width: 768px) 100vw, 400px"
                 />
+                
+                {/* Holographic frame overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-[#09090B] via-transparent to-transparent opacity-80" />
+                
+                {/* Floating telemetry watermark inside image */}
+                <div className="absolute top-3 right-3 px-2 py-1 rounded bg-black/60 backdrop-blur-md border border-white/[0.1] text-[9px] font-mono text-[#00FF94]">
+                  STATUS: LIVE
+                </div>
+
+                <div className="absolute bottom-3 left-3 right-3 p-3 rounded-xl bg-[#050505]/85 backdrop-blur-md border border-white/[0.08]">
+                  <p className="text-xs font-bold text-white font-sans">{FOUNDER_PROFILE.name}</p>
+                  <p className="text-[10px] font-mono text-zinc-400 mt-0.5">
+                    {FOUNDER_PROFILE.title.split(" • ")[0]} • {FOUNDER_PROFILE.education.degree.split(" (")[0]}
+                  </p>
+                </div>
               </div>
-            </div>
 
-            {/* Online / Active Badge */}
-            <div className="absolute bottom-1 right-1/2 translate-x-12 px-2.5 py-0.5 rounded-full bg-[#0d1322] border border-emerald-500/40 text-emerald-400 text-[10px] font-mono flex items-center gap-1.5 shadow-lg">
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-              <span>Disponible</span>
-            </div>
-          </div>
-
-          {/* Location & Title pill */}
-          <div className="flex flex-wrap items-center justify-center gap-2 mb-4 text-xs text-slate-300">
-            <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-slate-900/80 border border-white/10 text-slate-300">
-              <MapPin className="w-3.5 h-3.5 text-rose-400" />
-              {FOUNDER_PROFILE.location}
-            </span>
-            <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-indigo-950/60 border border-indigo-500/30 text-indigo-300 font-mono">
-              <GraduationCap className="w-3.5 h-3.5 text-cyan-400" />
-              {FOUNDER_PROFILE.education.degree.split(" (")[0]}
-            </span>
-            <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-emerald-950/60 border border-emerald-500/30 text-emerald-300 font-mono">
-              <Briefcase className="w-3.5 h-3.5 text-emerald-400" />
-              Ingeniero Full-Stack & Embebidos
-            </span>
-          </div>
-
-          {/* Main Title */}
-          <h1 className="text-3xl sm:text-5xl md:text-6xl font-black tracking-tight text-white mb-5 leading-[1.12]">
-            Hola, soy <span className="text-white">{FOUNDER_PROFILE.name}</span>.<br />
-            <span className="glow-gradient-text">Ingeniero de Software & Creador de Apps.</span>
-          </h1>
-
-          {/* Description */}
-          <p className="text-sm sm:text-base md:text-lg text-slate-300 mb-8 leading-relaxed max-w-3xl mx-auto">
-            {FOUNDER_PROFILE.bio} Aquí encontrarás mis <strong>aplicaciones y SaaS listos para comercializar</strong>, con un desglose técnico riguroso de cada uno: problemas de negocio que resuelven, público objetivo, viabilidad comercial y arquitectura de código.
-          </p>
-
-          {/* Action Buttons */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-3.5 mb-14">
-            <Link
-              href="#proyectos"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl font-bold text-xs sm:text-sm bg-gradient-to-r from-indigo-500 via-indigo-600 to-cyan-500 text-white shadow-lg shadow-indigo-500/25 hover:shadow-indigo-500/40 hover:-translate-y-0.5 transition-all"
-            >
-              <span>Explorar Proyectos & Apps</span>
-              <ArrowRight className="w-4 h-4" />
-            </Link>
-
-            <a
-              href={FOUNDER_PROFILE.cvUrl}
-              download="CV_Daniel_Martinez_Mira.pdf"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl font-bold text-xs sm:text-sm bg-slate-900/90 hover:bg-slate-800 text-slate-200 border border-white/10 hover:border-white/20 transition-all hover:-translate-y-0.5"
-            >
-              <Download className="w-4 h-4 text-cyan-400" />
-              <span>Descargar Mi CV (PDF)</span>
-            </a>
-
-            <Link
-              href="#monetizacion"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl font-bold text-xs sm:text-sm bg-emerald-950/40 hover:bg-emerald-900/60 text-emerald-300 border border-emerald-500/30 transition-all hover:-translate-y-0.5"
-            >
-              <TrendingUp className="w-4 h-4 text-emerald-400" />
-              <span>Adquisición / Compra de Apps</span>
-            </Link>
-          </div>
-
-          {/* Key Metrics / Highlights Bar */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 max-w-4xl mx-auto text-left">
-            <div className="glass-card rounded-2xl p-4 border border-white/5">
-              <div className="flex items-center gap-2 text-indigo-400 text-xs font-medium mb-1">
-                <Briefcase className="w-4 h-4" />
-                <span>Trayectoria Profesional</span>
+              {/* Technical specs breakdown under photo */}
+              <div className="space-y-2 text-[11px] font-mono">
+                <div className="flex items-center justify-between p-2 rounded-lg bg-white/[0.02] border border-white/[0.04]">
+                  <span className="text-zinc-500">EXPERIENCIA:</span>
+                  <span className="text-white font-semibold">+2 AÑOS (BALTERRA ING.)</span>
+                </div>
+                <div className="flex items-center justify-between p-2 rounded-lg bg-white/[0.02] border border-white/[0.04]">
+                  <span className="text-zinc-500">ARQUITECTURA:</span>
+                  <span className="text-[#00FF94]">CLEAN + EMBEDDED + AI</span>
+                </div>
+                <div className="flex items-center justify-between p-2 rounded-lg bg-white/[0.02] border border-white/[0.04]">
+                  <span className="text-zinc-500">PROYECTOS:</span>
+                  <span className="text-white">7 APPS DE NEGOCIO</span>
+                </div>
               </div>
-              <div className="text-xl sm:text-2xl font-bold text-white tracking-tight">+2 Años Experiencia</div>
-              <p className="text-[11px] text-slate-400 mt-0.5">Balterra Ingeniería SL (Full-Time)</p>
-            </div>
 
-            <div className="glass-card rounded-2xl p-4 border border-white/5">
-              <div className="flex items-center gap-2 text-emerald-400 text-xs font-medium mb-1">
-                <TrendingUp className="w-4 h-4" />
-                <span>Proyectos y SaaS</span>
-              </div>
-              <div className="text-xl sm:text-2xl font-bold text-white tracking-tight">7 Aplicaciones</div>
-              <p className="text-[11px] text-slate-400 mt-0.5">SaaS B2B, IA, PWA, IoT y Unity</p>
             </div>
+          </motion.div>
 
-            <div className="glass-card rounded-2xl p-4 border border-white/5">
-              <div className="flex items-center gap-2 text-cyan-400 text-xs font-medium mb-1">
-                <ShieldCheck className="w-4 h-4" />
-                <span>Formación Oficial</span>
-              </div>
-              <div className="text-xl sm:text-2xl font-bold text-white tracking-tight">Grado Ingeniería</div>
-              <p className="text-[11px] text-slate-400 mt-0.5">Universitat de València</p>
-            </div>
-
-            <div className="glass-card rounded-2xl p-4 border border-white/5">
-              <div className="flex items-center gap-2 text-amber-400 text-xs font-medium mb-1">
-                <ExternalLink className="w-4 h-4" />
-                <span>Viabilidad Comercial</span>
-              </div>
-              <div className="text-xl sm:text-2xl font-bold text-white tracking-tight">Listas para Venta</div>
-              <p className="text-[11px] text-slate-400 mt-0.5">Código fuente o cesión de negocio</p>
-            </div>
-          </div>
-
-        </div>
+        </motion.div>
       </div>
     </section>
   );

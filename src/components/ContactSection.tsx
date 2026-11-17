@@ -1,8 +1,9 @@
 "use client";
 
 import React, { useState } from "react";
-import { Mail, Phone, MapPin, Send, Github, Linkedin, Check, Sparkles } from "lucide-react";
+import { Mail, Phone, MapPin, Send, Check, Terminal, Sparkles, ArrowUpRight } from "lucide-react";
 import { PROJECTS_DATA, FOUNDER_PROFILE } from "@/data/projects";
+import MagneticButton from "./MagneticButton";
 
 export default function ContactSection() {
   const [selectedProject, setSelectedProject] = useState<string>("crold-saas");
@@ -13,189 +14,188 @@ export default function ContactSection() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const mailtoSubject = encodeURIComponent(`Interés en proyecto: ${selectedProject} - De: ${name}`);
+    const mailtoSubject = encodeURIComponent(`[PORTFOLIO CONTACT] Proyecto: ${selectedProject} - De: ${name}`);
     const mailtoBody = encodeURIComponent(`Hola Daniel,\n\nSoy ${name} (${email}).\n\nEstoy interesado en tu proyecto "${selectedProject}".\n\nMensaje:\n${message}\n\nUn saludo cordial.`);
     window.location.href = `mailto:${FOUNDER_PROFILE.email}?subject=${mailtoSubject}&body=${mailtoBody}`;
     setSubmitted(true);
   };
 
   return (
-    <section id="contacto" className="py-16 md:py-24 bg-[#070b13] border-t border-white/5 relative">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          
-          {/* Left Info Column */}
+    <section id="contacto" className="py-20 md:py-28 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative border-t border-white/[0.06]">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+        
+        {/* Left Column: Direct Credentials & Channels */}
+        <div className="lg:col-span-5 space-y-8">
           <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 text-amber-400 text-xs font-medium border border-amber-500/20 mb-3">
-              <Sparkles className="w-3.5 h-3.5" />
-              <span>Contacto Directo con {FOUNDER_PROFILE.name}</span>
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.03] border border-white/[0.08] text-xs font-mono text-[#00FF94] mb-4">
+              <Terminal className="w-3.5 h-3.5" />
+              <span>DIRECT INQUIRY // DANIEL MARTÍNEZ MIRA</span>
             </div>
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight mb-4">
-              ¿Hablamos sobre un proyecto o una oportunidad de negocio?
+            <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tightest uppercase leading-tight mb-4">
+              ¿Hablamos sobre un proyecto o acuerdo comercial?
             </h2>
-            <p className="text-sm sm:text-base text-slate-300 mb-8 leading-relaxed">
-              Tanto si deseas adquirir el código de alguna de mis aplicaciones, licenciar una solución para tu empresa, o necesitas un ingeniero de software con perfil Full-Stack e IA para un desarrollo clave, contáctame directamente:
+            <p className="text-sm sm:text-base text-zinc-400 leading-relaxed font-sans">
+              Tanto si deseas adquirir la licencia o el código fuente de alguna de las aplicaciones, como si necesitas un ingeniero de software con perfil Full-Stack e IA para una posición estratégica o proyecto a medida, contáctame directamente:
             </p>
+          </div>
 
-            {/* Direct Channels */}
-            <div className="space-y-3 mb-8">
-              {/* Email */}
-              <a
-                href={`mailto:${FOUNDER_PROFILE.email}`}
-                className="flex items-center gap-4 p-4 rounded-2xl glass-card border border-white/10 hover:border-indigo-500/40 transition-colors group"
-              >
-                <div className="w-10 h-10 rounded-xl bg-indigo-500/15 border border-indigo-500/30 flex items-center justify-center text-indigo-400 group-hover:scale-110 transition-transform">
-                  <Mail className="w-5 h-5" />
-                </div>
-                <div>
-                  <p className="text-[11px] text-slate-400 font-mono">Correo Electrónico</p>
-                  <p className="text-sm font-semibold text-white group-hover:text-indigo-400 transition-colors">
-                    {FOUNDER_PROFILE.email}
-                  </p>
-                </div>
-              </a>
-
-              {/* Phone */}
-              <a
-                href={`tel:${FOUNDER_PROFILE.phone.replace(/[^0-9+]/g, '')}`}
-                className="flex items-center gap-4 p-4 rounded-2xl glass-card border border-white/10 hover:border-emerald-500/40 transition-colors group"
-              >
-                <div className="w-10 h-10 rounded-xl bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center text-emerald-400 group-hover:scale-110 transition-transform">
-                  <Phone className="w-5 h-5" />
-                </div>
-                <div>
-                  <p className="text-[11px] text-slate-400 font-mono">Teléfono / WhatsApp</p>
-                  <p className="text-sm font-semibold text-white group-hover:text-emerald-400 transition-colors">
-                    {FOUNDER_PROFILE.phone}
-                  </p>
-                </div>
-              </a>
-
-              {/* Location */}
-              <div className="flex items-center gap-4 p-4 rounded-2xl glass-card border border-white/10">
-                <div className="w-10 h-10 rounded-xl bg-rose-500/15 border border-rose-500/30 flex items-center justify-center text-rose-400">
-                  <MapPin className="w-5 h-5" />
-                </div>
-                <div>
-                  <p className="text-[11px] text-slate-400 font-mono">Ubicación</p>
-                  <p className="text-sm font-semibold text-white">
-                    {FOUNDER_PROFILE.location}
-                  </p>
-                </div>
+          <div className="space-y-3 font-mono text-xs">
+            {/* Email */}
+            <a
+              href={`mailto:${FOUNDER_PROFILE.email}`}
+              className="flex items-center gap-4 p-4 rounded-2xl bg-[#09090B]/80 border border-white/[0.08] hover:border-[#00FF94]/50 transition-colors group"
+            >
+              <div className="w-10 h-10 rounded-xl bg-white/[0.04] border border-white/[0.08] flex items-center justify-center text-[#00FF94] group-hover:scale-105 transition-transform">
+                <Mail className="w-4 h-4" />
               </div>
-            </div>
+              <div>
+                <p className="text-[10px] text-zinc-500 uppercase tracking-widest">CORREO DIRECTO</p>
+                <p className="text-sm font-semibold text-white group-hover:text-[#00FF94] transition-colors">
+                  {FOUNDER_PROFILE.email}
+                </p>
+              </div>
+            </a>
 
-            {/* Fast status badge */}
-            <div className="p-4 rounded-xl bg-emerald-950/20 border border-emerald-500/20 text-xs text-emerald-300 flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
-              <span>Respuesta habitual en menos de 24 horas laborables.</span>
+            {/* Phone */}
+            <a
+              href={`tel:${FOUNDER_PROFILE.phone.replace(/[^0-9+]/g, '')}`}
+              className="flex items-center gap-4 p-4 rounded-2xl bg-[#09090B]/80 border border-white/[0.08] hover:border-[#00FF94]/50 transition-colors group"
+            >
+              <div className="w-10 h-10 rounded-xl bg-white/[0.04] border border-white/[0.08] flex items-center justify-center text-[#00FF94] group-hover:scale-105 transition-transform">
+                <Phone className="w-4 h-4" />
+              </div>
+              <div>
+                <p className="text-[10px] text-zinc-500 uppercase tracking-widest">TELÉFONO // WHATSAPP</p>
+                <p className="text-sm font-semibold text-white group-hover:text-[#00FF94] transition-colors">
+                  {FOUNDER_PROFILE.phone}
+                </p>
+              </div>
+            </a>
+
+            {/* Location */}
+            <div className="flex items-center gap-4 p-4 rounded-2xl bg-[#09090B]/80 border border-white/[0.08]">
+              <div className="w-10 h-10 rounded-xl bg-white/[0.04] border border-white/[0.08] flex items-center justify-center text-zinc-400">
+                <MapPin className="w-4 h-4" />
+              </div>
+              <div>
+                <p className="text-[10px] text-zinc-500 uppercase tracking-widest">UBICACIÓN FÍSICA</p>
+                <p className="text-sm font-semibold text-white font-sans">
+                  {FOUNDER_PROFILE.location}
+                </p>
+              </div>
             </div>
           </div>
 
-          {/* Right Form Column */}
-          <div className="glass-card rounded-3xl p-6 sm:p-8 border border-white/10 shadow-2xl">
-            <h3 className="text-xl font-bold text-white mb-2">
-              Enviar Mensaje Directo
-            </h3>
-            <p className="text-xs text-slate-400 mb-6">
-              Selecciona el proyecto que te interesa o envíame una propuesta general.
-            </p>
+          <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/[0.06] text-xs font-mono text-zinc-400 flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-[#00FF94] animate-pulse" />
+            <span>RESPUESTA HABITUAL: &lt; 24 HORAS LABORABLES</span>
+          </div>
+        </div>
 
-            {submitted ? (
-              <div className="p-6 rounded-2xl bg-emerald-950/40 border border-emerald-500/30 text-center space-y-3">
-                <div className="w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center mx-auto">
-                  <Check className="w-6 h-6" />
-                </div>
-                <h4 className="text-base font-bold text-white">¡Mensaje preparado!</h4>
-                <p className="text-xs text-slate-300">
-                  Se ha generado el correo en tu cliente de mensajería. También puedes escribir directamente a{" "}
-                  <strong className="text-emerald-400 font-mono">{FOUNDER_PROFILE.email}</strong>.
-                </p>
-                <button
-                  onClick={() => setSubmitted(false)}
-                  className="px-4 py-2 text-xs text-slate-400 hover:text-white underline mt-2"
-                >
-                  Enviar otro mensaje
-                </button>
+        {/* Right Column: Terminal Contact Form */}
+        <div className="lg:col-span-7 p-6 sm:p-10 rounded-3xl bg-[#09090B]/90 border border-white/[0.1] backdrop-blur-2xl shadow-2xl relative">
+          
+          <div className="flex items-center justify-between pb-4 mb-6 border-b border-white/[0.08] font-mono text-xs">
+            <span className="text-white font-bold tracking-wider">// COMUNICACIÓN DIRECTA</span>
+            <span className="text-[#00FF94]">TERMINAL_READY</span>
+          </div>
+
+          {submitted ? (
+            <div className="p-8 rounded-2xl bg-white/[0.02] border border-[#00FF94]/30 text-center space-y-4">
+              <div className="w-12 h-12 rounded-full bg-[#00FF94]/10 text-[#00FF94] border border-[#00FF94]/30 flex items-center justify-center mx-auto">
+                <Check className="w-6 h-6" />
               </div>
-            ) : (
-              <form onSubmit={handleSubmit} className="space-y-4 text-xs">
-                {/* Project selector */}
-                <div>
-                  <label className="block text-slate-300 font-medium mb-1.5">
-                    Proyecto de Interés
-                  </label>
-                  <select
-                    value={selectedProject}
-                    onChange={(e) => setSelectedProject(e.target.value)}
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-[#0d1322] text-white border border-white/10 focus:outline-none focus:border-indigo-500 text-xs"
-                  >
-                    <option value="General / Consultoría">Propuesta General / Ingeniería de Software</option>
-                    {PROJECTS_DATA.map((p) => (
-                      <option key={p.id} value={p.title}>
-                        {p.title} ({p.category})
-                      </option>
-                    ))}
-                  </select>
-                </div>
+              <h4 className="text-lg font-bold text-white font-mono">// CONSULTA PREPARADA</h4>
+              <p className="text-xs text-zinc-400 font-sans max-w-sm mx-auto">
+                Se ha generado el mensaje en tu cliente de correo. También puedes escribir directamente a <strong className="text-white font-mono">{FOUNDER_PROFILE.email}</strong>.
+              </p>
+              <button
+                onClick={() => setSubmitted(false)}
+                className="text-xs font-mono text-[#00FF94] hover:underline"
+              >
+                Enviar otro mensaje
+              </button>
+            </div>
+          ) : (
+            <form onSubmit={handleSubmit} className="space-y-5 text-xs font-mono">
+              {/* Project selector */}
+              <div>
+                <label className="block text-zinc-400 mb-2">
+                  01 // PROYECTO O MATERIA DE INTERÉS
+                </label>
+                <select
+                  value={selectedProject}
+                  onChange={(e) => setSelectedProject(e.target.value)}
+                  className="w-full px-4 py-3 rounded-xl bg-[#050505] text-white border border-white/[0.08] focus:outline-none focus:border-[#00FF94] text-xs font-mono"
+                >
+                  <option value="Propuesta General / Ingeniería">Propuesta General / Contratación de Ingeniería</option>
+                  {PROJECTS_DATA.map((p) => (
+                    <option key={p.id} value={p.title}>
+                      {p.title} ({p.category})
+                    </option>
+                  ))}
+                </select>
+              </div>
 
-                {/* Name */}
-                <div>
-                  <label className="block text-slate-300 font-medium mb-1.5">
-                    Tu Nombre o Empresa
-                  </label>
-                  <input
-                    type="text"
-                    required
-                    placeholder="Ej. Roberto Gómez o Acme Corp"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-[#0d1322] text-white border border-white/10 focus:outline-none focus:border-indigo-500 text-xs placeholder-slate-500"
-                  />
-                </div>
+              {/* Name */}
+              <div>
+                <label className="block text-zinc-400 mb-2">
+                  02 // NOMBRE O EMPRESA
+                </label>
+                <input
+                  type="text"
+                  required
+                  placeholder="Ej. Roberto Gómez o Acme Industrial"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  className="w-full px-4 py-3 rounded-xl bg-[#050505] text-white border border-white/[0.08] focus:outline-none focus:border-[#00FF94] text-xs font-mono placeholder-zinc-700"
+                />
+              </div>
 
-                {/* Email */}
-                <div>
-                  <label className="block text-slate-300 font-medium mb-1.5">
-                    Tu Correo Electrónico
-                  </label>
-                  <input
-                    type="email"
-                    required
-                    placeholder="nombre@ejemplo.com"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-[#0d1322] text-white border border-white/10 focus:outline-none focus:border-indigo-500 text-xs placeholder-slate-500"
-                  />
-                </div>
+              {/* Email */}
+              <div>
+                <label className="block text-zinc-400 mb-2">
+                  03 // EMAIL DE CONTACTO
+                </label>
+                <input
+                  type="email"
+                  required
+                  placeholder="contacto@empresa.com"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="w-full px-4 py-3 rounded-xl bg-[#050505] text-white border border-white/[0.08] focus:outline-none focus:border-[#00FF94] text-xs font-mono placeholder-zinc-700"
+                />
+              </div>
 
-                {/* Message */}
-                <div>
-                  <label className="block text-slate-300 font-medium mb-1.5">
-                    Mensaje / Consulta
-                  </label>
-                  <textarea
-                    rows={4}
-                    required
-                    placeholder="Cuéntame si estás interesado en comprar el código, adquirir el SaaS, plantear una oferta o solicitar una demo privada..."
-                    value={message}
-                    onChange={(e) => setMessage(e.target.value)}
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-[#0d1322] text-white border border-white/10 focus:outline-none focus:border-indigo-500 text-xs placeholder-slate-500 resize-none"
-                  />
-                </div>
+              {/* Message */}
+              <div>
+                <label className="block text-zinc-400 mb-2">
+                  04 // DETALLES DE LA PROPUESTA / ADQUISICIÓN
+                </label>
+                <textarea
+                  rows={4}
+                  required
+                  placeholder="Describe si te interesa la compra del código, licenciamiento marca blanca o una demo técnica..."
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value)}
+                  className="w-full px-4 py-3 rounded-xl bg-[#050505] text-white border border-white/[0.08] focus:outline-none focus:border-[#00FF94] text-xs font-mono placeholder-zinc-700 resize-none"
+                />
+              </div>
 
+              <MagneticButton strength={0.2} className="w-full">
                 <button
                   type="submit"
-                  className="w-full flex items-center justify-center gap-2 py-3.5 rounded-xl font-bold text-xs bg-gradient-to-r from-indigo-500 to-cyan-500 text-white hover:from-indigo-600 hover:to-cyan-600 shadow-md shadow-indigo-500/20 transition-all hover:-translate-y-0.5"
+                  className="w-full flex items-center justify-center gap-2 py-3.5 rounded-xl font-mono text-xs font-bold bg-[#00FF94] text-black hover:bg-[#5CFFB8] transition-all shadow-[0_0_20px_rgba(0,255,148,0.25)]"
                 >
-                  <Send className="w-4 h-4" />
-                  <span>Enviar Mensaje a Daniel</span>
+                  <Send className="w-3.5 h-3.5" />
+                  <span>ENVIAR MENSAJE A DANIEL</span>
                 </button>
-              </form>
-            )}
-          </div>
+              </MagneticButton>
+            </form>
+          )}
 
         </div>
+
       </div>
     </section>
   );

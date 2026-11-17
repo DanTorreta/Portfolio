@@ -1,113 +1,133 @@
+"use client";
+
 import React from "react";
 import Link from "next/link";
-import { DollarSign, Rocket, CheckCircle, Shield, Briefcase, ArrowRight, Zap, Target } from "lucide-react";
+import { Terminal, Target, Zap, Shield, ArrowRight, Check, DollarSign } from "lucide-react";
+import MagneticButton from "./MagneticButton";
 
 export default function MonetizationSection() {
   return (
-    <section id="monetizacion" className="py-16 md:py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="monetizacion" className="py-20 md:py-28 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative border-t border-white/[0.06]">
+      
       {/* Header */}
-      <div className="text-center max-w-3xl mx-auto mb-16">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 text-xs font-medium border border-emerald-500/20 mb-3">
-          <DollarSign className="w-3.5 h-3.5" />
-          <span>Visión de Negocio & Comercialización</span>
+      <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6 pb-6 border-b border-white/[0.06]">
+        <div>
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.03] border border-white/[0.08] text-xs font-mono text-[#00FF94] mb-4">
+            <Terminal className="w-3.5 h-3.5" />
+            <span>BUSINESS VIABILITY // REVENUE &amp; COMMERCIAL ACQUISITION</span>
+          </div>
+          <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tightest uppercase leading-tight">
+            Software Diseñado para Facturar y Ser Vendido
+          </h2>
+          <p className="text-sm sm:text-base text-zinc-400 mt-2 max-w-2xl font-sans">
+            A diferencia de demos académicas o plantillas conceptuales, cada una de mis aplicaciones está programada bajo métricas de negocio reales, validación de demanda y arquitectura lista para cobros en producción.
+          </p>
         </div>
-        <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
-          Software Diseñado para Facturar y Ser Vendido
-        </h2>
-        <p className="text-sm sm:text-base text-slate-400 mt-2">
-          A diferencia de proyectos meramente académicos o demos simples, cada una de mis aplicaciones está concebida bajo métricas de negocio reales, validación de dolor en el cliente y arquitectura lista para facturar en producción.
-        </p>
+
+        <div className="shrink-0 text-xs font-mono px-4 py-2 rounded-full bg-white/[0.02] border border-white/[0.08] text-[#00FF94]">
+          // 85%+ GROSS MARGIN ARCHITECTURE
+        </div>
       </div>
 
-      {/* 3 Pillars */}
+      {/* 3 Engineering Pillars */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
-        <div className="glass-card rounded-2xl p-6 border border-white/10">
-          <div className="w-12 h-12 rounded-xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400 mb-4">
-            <Target className="w-6 h-6" />
+        <div className="p-6 rounded-3xl bg-[#09090B]/80 border border-white/[0.08] backdrop-blur-md space-y-3">
+          <div className="w-10 h-10 rounded-2xl bg-white/[0.04] border border-white/[0.08] flex items-center justify-center text-[#00FF94]">
+            <Target className="w-5 h-5" />
           </div>
-          <h3 className="text-lg font-bold text-white mb-2">1. Foco en Dolor Real (B2B & B2C)</h3>
-          <p className="text-xs text-slate-400 leading-relaxed">
-            Cada app ataca una ineficiencia medible: talleres que pierden horas en papeleo, profesionales con citas desiertas o industrias que sufren averías imprevistas. Si hay dolor, hay disposición a pagar.
+          <h3 className="text-lg font-bold text-white tracking-tight">1. Foco en Dolor Real (B2B &amp; B2C)</h3>
+          <p className="text-xs text-zinc-400 leading-relaxed font-sans">
+            Cada app ataca una ineficiencia medible: talleres que pierden horas en papeleo, profesionales con citas desiertas o industrias con averías imprevistas. Si hay dolor cuantificable, existe disposición de pago.
           </p>
         </div>
 
-        <div className="glass-card rounded-2xl p-6 border border-white/10">
-          <div className="w-12 h-12 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-400 mb-4">
-            <Zap className="w-6 h-6" />
+        <div className="p-6 rounded-3xl bg-[#09090B]/80 border border-white/[0.08] backdrop-blur-md space-y-3">
+          <div className="w-10 h-10 rounded-2xl bg-white/[0.04] border border-white/[0.08] flex items-center justify-center text-[#00FF94]">
+            <Zap className="w-5 h-5" />
           </div>
-          <h3 className="text-lg font-bold text-white mb-2">2. Infraestructura Serverless & Escalable</h3>
-          <p className="text-xs text-slate-400 leading-relaxed">
-            Construido en Vercel, Next.js, Supabase y Docker con coste de servidores cercano a cero en reposo y escalado elástico cuando los clientes crecen. Márgenes brutos de software superiores al 85%.
+          <h3 className="text-lg font-bold text-white tracking-tight">2. Serverless &amp; Costes $0 en Reposo</h3>
+          <p className="text-xs text-zinc-400 leading-relaxed font-sans">
+            Construido en Vercel Edge, Next.js, Supabase y Docker con coste de servidores cercano a cero en reposo y escalado elástico inmediato al aumentar clientes.
           </p>
         </div>
 
-        <div className="glass-card rounded-2xl p-6 border border-white/10">
-          <div className="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 mb-4">
-            <Shield className="w-6 h-6" />
+        <div className="p-6 rounded-3xl bg-[#09090B]/80 border border-white/[0.08] backdrop-blur-md space-y-3">
+          <div className="w-10 h-10 rounded-2xl bg-white/[0.04] border border-white/[0.08] flex items-center justify-center text-[#00FF94]">
+            <Shield className="w-5 h-5" />
           </div>
-          <h3 className="text-lg font-bold text-white mb-2">3. Listo para Cobrar</h3>
-          <p className="text-xs text-slate-400 leading-relaxed">
-            Integración de pasarelas de pago (Stripe Connect), gestión de suscripciones recurrentes (MRR), soporte multi-inquilino (multi-tenant) y políticas de seguridad preparadas para auditoría.
+          <h3 className="text-lg font-bold text-white tracking-tight">3. Arquitectura Lista para Facturar</h3>
+          <p className="text-xs text-zinc-400 leading-relaxed font-sans">
+            Integración de pasarelas de pago (Stripe Connect), gestión de suscripciones recurrentes (MRR), soporte multi-inquilino (multi-tenant con RLS) y políticas de seguridad preparadas para auditoría.
           </p>
         </div>
       </div>
 
-      {/* Sale / Acquisition Options Box */}
-      <div className="relative rounded-3xl p-8 md:p-12 overflow-hidden border border-emerald-500/30 bg-gradient-to-br from-emerald-950/40 via-[#0d1627] to-[#090d16]">
-        <div className="relative z-10 max-w-3xl">
-          <span className="text-xs font-mono font-semibold text-emerald-400 uppercase tracking-widest block mb-2">
-            Oportunidades de Compra & Traspaso
+      {/* Acquisition Options Box */}
+      <div className="relative rounded-3xl p-8 md:p-12 overflow-hidden border border-white/[0.1] bg-[#09090B]/90 backdrop-blur-2xl">
+        
+        {/* Subtle corner marker */}
+        <div className="absolute top-0 right-0 p-6 text-[10px] font-mono text-[#00FF94]">
+          [ MODELOS_DE_TRAPASO // V2.0 ]
+        </div>
+
+        <div className="max-w-3xl space-y-6">
+          <span className="text-xs font-mono font-bold text-[#00FF94] tracking-widest uppercase block">
+            OPORTUNIDADES DE COMPRA &amp; ACUERDOS COMERCIALES
           </span>
-          <h3 className="text-2xl sm:text-3xl font-extrabold text-white mb-4">
-            ¿Interesado en adquirir el código o el negocio completo de alguna de las apps?
+          <h3 className="text-2xl sm:text-4xl font-extrabold text-white tracking-tightest uppercase leading-tight">
+            ¿Interesado en adquirir el código o el negocio completo de alguna de las aplicaciones?
           </h3>
-          <p className="text-sm text-slate-300 mb-8 leading-relaxed">
-            Como ingeniero y creador de producto, estoy abierto a acuerdos comerciales flexibles: desde la compra del código fuente libre de royalties para integrarlo en tu empresa, hasta la adquisición del proyecto completo (SaaS llave en mano) o consultoría de implantación.
+          <p className="text-sm text-zinc-400 leading-relaxed font-sans">
+            Como ingeniero y creador de producto, ofrezco total flexibilidad en acuerdos de traspaso: desde la adquisición del repositorio Git completo libre de royalties, hasta la compra de la solución SaaS llave en mano o consultoría técnica de implantación personalizada.
           </p>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
-            <div className="flex items-start gap-3">
-              <CheckCircle className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2 pb-4">
+            <div className="flex items-start gap-3 p-3.5 rounded-2xl bg-white/[0.02] border border-white/[0.04]">
+              <span className="text-[#00FF94] font-mono mt-0.5">✔</span>
               <div>
-                <p className="text-xs font-bold text-white">Venta de Código Fuente Completo</p>
-                <p className="text-[11px] text-slate-400">Entrega de repositorio Git limpio, documentación y guías de despliegue.</p>
+                <p className="text-xs font-bold text-white font-mono uppercase">Venta de Código Fuente Completo</p>
+                <p className="text-[11px] text-zinc-400 font-sans mt-0.5">Repositorio Git limpio, esquemas de base de datos y guías de despliegue.</p>
               </div>
             </div>
 
-            <div className="flex items-start gap-3">
-              <CheckCircle className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+            <div className="flex items-start gap-3 p-3.5 rounded-2xl bg-white/[0.02] border border-white/[0.04]">
+              <span className="text-[#00FF94] font-mono mt-0.5">✔</span>
               <div>
-                <p className="text-xs font-bold text-white">Marca Blanca (White-Label)</p>
-                <p className="text-[11px] text-slate-400">Personalización con tu propia marca, dominio y pasarela para revenderlo.</p>
+                <p className="text-xs font-bold text-white font-mono uppercase">Marca Blanca (White-Label)</p>
+                <p className="text-[11px] text-zinc-400 font-sans mt-0.5">Personalización con tu propia marca, dominio y pasarela para revenderlo.</p>
               </div>
             </div>
 
-            <div className="flex items-start gap-3">
-              <CheckCircle className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+            <div className="flex items-start gap-3 p-3.5 rounded-2xl bg-white/[0.02] border border-white/[0.04]">
+              <span className="text-[#00FF94] font-mono mt-0.5">✔</span>
               <div>
-                <p className="text-xs font-bold text-white">Cesión de Propiedad Intelectual</p>
-                <p className="text-[11px] text-slate-400">Transferencia legal total del software para inversores o fondos de micro-SaaS.</p>
+                <p className="text-xs font-bold text-white font-mono uppercase">Cesión de Propiedad Intelectual</p>
+                <p className="text-[11px] text-zinc-400 font-sans mt-0.5">Transferencia legal total del software para fondos o inversores de micro-SaaS.</p>
               </div>
             </div>
 
-            <div className="flex items-start gap-3">
-              <CheckCircle className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+            <div className="flex items-start gap-3 p-3.5 rounded-2xl bg-white/[0.02] border border-white/[0.04]">
+              <span className="text-[#00FF94] font-mono mt-0.5">✔</span>
               <div>
-                <p className="text-xs font-bold text-white">Soporte Técnico de Despliegue</p>
-                <p className="text-[11px] text-slate-400">Acompañamiento en la puesta en marcha sobre tu propia cuenta de Vercel y Cloud.</p>
+                <p className="text-xs font-bold text-white font-mono uppercase">Acompañamiento Técnico</p>
+                <p className="text-[11px] text-zinc-400 font-sans mt-0.5">Soporte directo en la puesta en producción sobre tu infraestructura Vercel y Cloud.</p>
               </div>
             </div>
           </div>
 
-          <Link
-            href="#contacto"
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm bg-emerald-500 hover:bg-emerald-600 text-black shadow-lg shadow-emerald-500/25 transition-all hover:-translate-y-0.5"
-          >
-            <span>Iniciar Conversación sobre un Proyecto</span>
-            <ArrowRight className="w-4 h-4" />
-          </Link>
+          <MagneticButton>
+            <Link
+              href="#contacto"
+              className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full font-mono text-xs font-bold bg-[#00FF94] text-black hover:bg-[#5CFFB8] transition-all shadow-[0_0_25px_rgba(0,255,148,0.3)]"
+            >
+              <span>INICIAR CONVERSACIÓN DE ADQUISICIÓN</span>
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+          </MagneticButton>
         </div>
+
       </div>
+
     </section>
   );
 }

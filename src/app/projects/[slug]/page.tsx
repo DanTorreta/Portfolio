@@ -1,10 +1,9 @@
 import React from "react";
 import { notFound } from "next/navigation";
-import Image from "next/image";
 import Link from "next/link";
 import { Metadata } from "next";
 import { PROJECTS_DATA, FOUNDER_PROFILE } from "@/data/projects";
-import { formatCategoryBadgeColor, formatStatusBadgeColor } from "@/lib/utils";
+import GenerativeArtwork from "@/components/GenerativeArtwork";
 import {
   ArrowLeft,
   ExternalLink,
@@ -18,10 +17,10 @@ import {
   Database,
   Cloud,
   ChevronRight,
-  TrendingUp,
   ShieldCheck,
   Sparkles,
-  ArrowRight
+  ArrowRight,
+  Terminal
 } from "lucide-react";
 
 interface ProjectPageProps {
@@ -41,7 +40,7 @@ export async function generateMetadata({ params }: ProjectPageProps): Promise<Me
   if (!project) return { title: "Proyecto no encontrado" };
 
   return {
-    title: `${project.title} | Daniel Portfolio`,
+    title: `${project.title} // Daniel Martínez Mira`,
     description: project.shortDescription,
     openGraph: {
       title: project.title,
@@ -63,62 +62,62 @@ export default function ProjectDetailPage({ params }: ProjectPageProps) {
   const heroImage = project.screenshots.find((s) => s.isCover) || project.screenshots[0];
 
   return (
-    <div className="min-h-screen py-10 md:py-16">
+    <div className="min-h-screen py-24 md:py-32 bg-[#050505]">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Navigation Breadcrumb */}
-        <div className="flex items-center justify-between mb-8 pb-4 border-b border-white/10">
+        <div className="flex items-center justify-between mb-10 pb-4 border-b border-white/[0.08]">
           <Link
             href="/#proyectos"
-            className="inline-flex items-center gap-2 text-xs font-medium text-slate-400 hover:text-white transition-colors"
+            className="inline-flex items-center gap-2 text-xs font-mono text-zinc-400 hover:text-[#00FF94] transition-colors"
           >
             <ArrowLeft className="w-4 h-4" />
-            <span>Volver a todos los proyectos</span>
+            <span>// VOLVER AL CATÁLOGO</span>
           </Link>
 
-          <div className="flex items-center gap-2 text-xs text-slate-500 font-mono">
-            <span>Proyecto {projectIndex + 1} de {PROJECTS_DATA.length}</span>
+          <div className="flex items-center gap-2 text-xs font-mono text-zinc-500">
+            <span>UNIDAD {projectIndex + 1} DE {PROJECTS_DATA.length}</span>
           </div>
         </div>
 
         {/* Project Header */}
-        <div className="mb-10">
+        <div className="mb-12">
           {/* Badges Bar */}
-          <div className="flex flex-wrap items-center gap-2.5 mb-4">
-            <span className={`text-xs font-medium px-3 py-1 rounded-full border ${formatCategoryBadgeColor(project.category)}`}>
+          <div className="flex flex-wrap items-center gap-2.5 mb-5 font-mono text-xs">
+            <span className="px-3 py-1 rounded-full bg-white/[0.04] text-zinc-200 border border-white/[0.1]">
               {project.category}
             </span>
-            <span className={`text-xs font-medium px-3 py-1 rounded-full border ${formatStatusBadgeColor(project.status)}`}>
+            <span className="px-3 py-1 rounded-full bg-[#00FF94]/10 text-[#00FF94] border border-[#00FF94]/30 flex items-center gap-1.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#00FF94] animate-pulse" />
               {project.status}
             </span>
-            <span className="text-xs font-medium px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-300 border border-emerald-500/30 flex items-center gap-1 font-mono">
-              <DollarSign className="w-3.5 h-3.5" />
+            <span className="px-3 py-1 rounded-full bg-white/[0.04] text-zinc-300 border border-white/[0.08]">
               {project.monetization.model}
             </span>
-            <span className="text-xs font-medium px-3 py-1 rounded-full bg-slate-800 text-slate-300 border border-white/10 font-mono">
-              {project.completionPercentage}% Completado
+            <span className="px-3 py-1 rounded-full bg-white/[0.04] text-zinc-400 border border-white/[0.08]">
+              {project.completionPercentage}% READY
             </span>
           </div>
 
-          <h1 className="text-3xl sm:text-5xl font-black text-white tracking-tight mb-4 leading-tight">
+          <h1 className="text-3xl sm:text-5xl md:text-6xl font-extrabold text-white tracking-tightest mb-4 uppercase leading-none">
             {project.title}
           </h1>
 
-          <p className="text-lg sm:text-xl text-indigo-300/90 font-medium mb-6 leading-relaxed">
+          <p className="text-base sm:text-xl text-zinc-300 font-sans leading-relaxed mb-8 max-w-3xl">
             {project.tagline}
           </p>
 
           {/* Action CTAs */}
-          <div className="flex flex-wrap items-center gap-3 pt-2">
+          <div className="flex flex-wrap items-center gap-3">
             {project.links.liveUrl && (
               <a
                 href={project.links.liveUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-bold text-xs bg-gradient-to-r from-indigo-500 to-cyan-500 text-white shadow-lg shadow-indigo-500/20 hover:from-indigo-600 hover:to-cyan-600 transition-all hover:-translate-y-0.5"
+                className="inline-flex items-center gap-2 px-5 py-3 rounded-full font-mono text-xs font-bold bg-[#00FF94] text-black hover:bg-[#5CFFB8] transition-all shadow-[0_0_20px_rgba(0,255,148,0.25)]"
               >
-                <span>Visitar Aplicación en Vivo</span>
-                <ExternalLink className="w-4 h-4" />
+                <span>ABRIR APLICACIÓN EN VIVO</span>
+                <ExternalLink className="w-3.5 h-3.5" />
               </a>
             )}
 
@@ -127,10 +126,10 @@ export default function ProjectDetailPage({ params }: ProjectPageProps) {
                 href={project.links.demoUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold text-xs bg-slate-800 hover:bg-slate-700 text-slate-200 border border-white/10 transition-colors"
+                className="inline-flex items-center gap-2 px-5 py-3 rounded-full font-mono text-xs font-medium bg-white/[0.05] hover:bg-white/[0.1] text-white border border-white/[0.1] transition-colors"
               >
-                <span>Ver Demo Interactiva</span>
-                <ExternalLink className="w-4 h-4" />
+                <span>VER DEMO</span>
+                <ExternalLink className="w-3.5 h-3.5" />
               </a>
             )}
 
@@ -139,77 +138,67 @@ export default function ProjectDetailPage({ params }: ProjectPageProps) {
                 href={project.links.githubUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold text-xs bg-slate-900 hover:bg-slate-800 text-slate-300 hover:text-white border border-white/10 transition-colors"
+                className="inline-flex items-center gap-2 px-5 py-3 rounded-full font-mono text-xs font-medium bg-white/[0.05] hover:bg-white/[0.1] text-zinc-300 hover:text-white border border-white/[0.1] transition-colors"
               >
-                <Github className="w-4 h-4" />
-                <span>Repositorio de Código</span>
+                <Github className="w-3.5 h-3.5" />
+                <span>REPOSITORIO</span>
               </a>
             )}
 
             <Link
               href="/#contacto"
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold text-xs bg-emerald-950/40 hover:bg-emerald-900/60 text-emerald-300 border border-emerald-500/30 transition-colors"
+              className="inline-flex items-center gap-2 px-5 py-3 rounded-full font-mono text-xs text-[#00FF94] bg-[#00FF94]/[0.05] hover:bg-[#00FF94]/[0.1] border border-[#00FF94]/30 transition-colors"
             >
-              <DollarSign className="w-4 h-4 text-emerald-400" />
-              <span>Consultar Adquisición / Licencia</span>
+              <DollarSign className="w-3.5 h-3.5" />
+              <span>CONSULTAR ADQUISICIÓN // LICENCIA</span>
             </Link>
           </div>
         </div>
 
-        {/* Hero Visual Display */}
-        {heroImage && (
-          <div className="relative w-full h-72 sm:h-96 md:h-[460px] rounded-3xl overflow-hidden border border-white/10 mb-14 shadow-2xl bg-slate-900">
-            <Image
-              src={heroImage.url}
-              alt={heroImage.title}
-              fill
-              priority
-              className="object-cover"
-              sizes="(max-width: 1200px) 100vw, 1200px"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#090d16] via-transparent to-transparent opacity-80" />
-            <div className="absolute bottom-6 left-6 right-6 p-4 rounded-2xl glass-panel max-w-xl">
-              <p className="text-white font-bold text-sm">{heroImage.title}</p>
-              <p className="text-slate-300 text-xs mt-1">{heroImage.description}</p>
-            </div>
-          </div>
-        )}
+        {/* Hero Visual Viewport */}
+        <div className="relative w-full h-72 sm:h-96 md:h-[460px] rounded-3xl overflow-hidden border border-white/[0.1] mb-16 bg-[#09090B]">
+          <GenerativeArtwork
+            slug={project.slug}
+            title={project.title}
+            imageUrl={heroImage?.url}
+          />
+        </div>
 
         {/* Main Content Layout */}
         <div className="space-y-12">
 
           {/* Section 1: Overview */}
-          <div className="glass-card rounded-3xl p-6 sm:p-8 border border-white/10">
-            <h2 className="text-xl font-bold text-white mb-3 flex items-center gap-2">
-              <Sparkles className="w-5 h-5 text-indigo-400" />
-              <span>¿De qué va la aplicación? (Visión General)</span>
+          <div className="p-8 rounded-3xl bg-[#09090B]/80 border border-white/[0.08] backdrop-blur-md">
+            <h2 className="text-xl font-bold text-white mb-3 font-mono uppercase tracking-wider flex items-center gap-2">
+              <Terminal className="w-4 h-4 text-[#00FF94]" />
+              <span>01 // VISIÓN GENERAL DEL PRODUCTO</span>
             </h2>
-            <p className="text-slate-300 text-sm sm:text-base leading-relaxed">
+            <p className="text-zinc-300 text-sm sm:text-base leading-relaxed font-sans">
               {project.shortDescription}
             </p>
           </div>
 
-          {/* Section 2 & 3: Problema & Solución (Side by Side) */}
+          {/* Section 2 & 3: Problema & Solución */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             
             {/* Problema */}
-            <div className="rounded-3xl p-6 sm:p-8 border border-rose-500/20 bg-rose-950/10 flex flex-col justify-between">
+            <div className="p-8 rounded-3xl bg-[#09090B]/80 border border-rose-500/20 flex flex-col justify-between">
               <div>
-                <div className="flex items-center gap-2 text-rose-400 font-bold text-lg mb-3">
-                  <AlertCircle className="w-5 h-5" />
-                  <h2>¿Qué problema resuelve?</h2>
+                <div className="flex items-center gap-2 text-rose-400 font-mono text-xs font-bold uppercase mb-3">
+                  <AlertCircle className="w-4 h-4" />
+                  <span>02 // ¿QUÉ PROBLEMA RESUELVE?</span>
                 </div>
-                <p className="text-slate-300 text-xs sm:text-sm leading-relaxed mb-6">
+                <p className="text-zinc-300 text-xs sm:text-sm leading-relaxed mb-6 font-sans">
                   {project.problemStatement.summary}
                 </p>
 
-                <h3 className="text-xs uppercase tracking-wider font-semibold text-rose-300/80 mb-3">
-                  Puntos de dolor identificados:
+                <h3 className="text-[11px] font-mono uppercase tracking-wider text-zinc-500 mb-3">
+                  PUNTOS DE DOLOR EN EL MERCADO:
                 </h3>
-                <ul className="space-y-2.5">
+                <ul className="space-y-2">
                   {project.problemStatement.painPoints.map((point, i) => (
-                    <li key={i} className="flex items-start gap-2.5 text-xs text-slate-300">
-                      <span className="w-1.5 h-1.5 rounded-full bg-rose-400 shrink-0 mt-1.5" />
+                    <li key={i} className="flex items-start gap-2.5 text-xs text-zinc-400 font-sans">
+                      <span className="text-rose-400 font-mono">▪</span>
                       <span>{point}</span>
                     </li>
                   ))}
@@ -218,23 +207,23 @@ export default function ProjectDetailPage({ params }: ProjectPageProps) {
             </div>
 
             {/* Solución */}
-            <div className="rounded-3xl p-6 sm:p-8 border border-emerald-500/20 bg-emerald-950/10 flex flex-col justify-between">
+            <div className="p-8 rounded-3xl bg-[#09090B]/80 border border-[#00FF94]/20 flex flex-col justify-between">
               <div>
-                <div className="flex items-center gap-2 text-emerald-400 font-bold text-lg mb-3">
-                  <CheckCircle2 className="w-5 h-5" />
-                  <h2>La Solución Implementada</h2>
+                <div className="flex items-center gap-2 text-[#00FF94] font-mono text-xs font-bold uppercase mb-3">
+                  <CheckCircle2 className="w-4 h-4" />
+                  <span>03 // LA SOLUCIÓN IMPLEMENTADA</span>
                 </div>
-                <p className="text-slate-300 text-xs sm:text-sm leading-relaxed mb-6">
+                <p className="text-zinc-300 text-xs sm:text-sm leading-relaxed mb-6 font-sans">
                   {project.solutionStatement.summary}
                 </p>
 
-                <h3 className="text-xs uppercase tracking-wider font-semibold text-emerald-300/80 mb-3">
-                  Beneficios medibles para el usuario:
+                <h3 className="text-[11px] font-mono uppercase tracking-wider text-zinc-500 mb-3">
+                  BENEFICIOS CUANTIFICABLES:
                 </h3>
-                <ul className="space-y-2.5">
+                <ul className="space-y-2">
                   {project.solutionStatement.benefits.map((benefit, i) => (
-                    <li key={i} className="flex items-start gap-2.5 text-xs text-slate-300">
-                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shrink-0 mt-1.5" />
+                    <li key={i} className="flex items-start gap-2.5 text-xs text-zinc-400 font-sans">
+                      <span className="text-[#00FF94] font-mono">✔</span>
                       <span>{benefit}</span>
                     </li>
                   ))}
@@ -245,182 +234,162 @@ export default function ProjectDetailPage({ params }: ProjectPageProps) {
           </div>
 
           {/* Section 4: Público Objetivo */}
-          <div className="glass-card rounded-3xl p-6 sm:p-8 border border-white/10">
-            <div className="flex items-center gap-2.5 text-cyan-400 font-bold text-xl mb-4">
-              <Users className="w-5 h-5" />
-              <h2>¿Para quién va dirigida? (Público Objetivo & Mercado)</h2>
+          <div className="p-8 rounded-3xl bg-[#09090B]/80 border border-white/[0.08]">
+            <div className="flex items-center gap-2 font-mono text-xs font-bold uppercase text-white mb-4">
+              <Users className="w-4 h-4 text-[#00FF94]" />
+              <span>04 // PÚBLICO OBJETIVO &amp; MERCADO (ICP)</span>
             </div>
             
-            <p className="text-slate-300 text-sm leading-relaxed mb-6">
-              <strong className="text-white">Perfil principal:</strong> {project.targetAudience.profile}
+            <p className="text-zinc-300 text-sm leading-relaxed mb-6 font-sans">
+              <strong className="text-white">Perfil objetivo:</strong> {project.targetAudience.profile}
             </p>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
-              <div className="p-4 rounded-2xl bg-slate-900/60 border border-white/5">
-                <h3 className="text-xs font-bold text-white uppercase tracking-wider mb-3">
-                  Tipos de Usuarios / Buyer Personas:
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/[0.04]">
+                <h3 className="text-xs font-mono font-bold text-white uppercase tracking-wider mb-3">
+                  BUYER PERSONAS:
                 </h3>
-                <ul className="space-y-2">
+                <ul className="space-y-2 text-xs text-zinc-400 font-sans">
                   {project.targetAudience.userTypes.map((type, i) => (
-                    <li key={i} className="flex items-center gap-2 text-xs text-slate-300">
-                      <ChevronRight className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
+                    <li key={i} className="flex items-center gap-2">
+                      <span className="text-[#00FF94] font-mono">❯</span>
                       <span>{type}</span>
                     </li>
                   ))}
                 </ul>
               </div>
 
-              <div className="p-4 rounded-2xl bg-slate-900/60 border border-white/5">
-                <h3 className="text-xs font-bold text-white uppercase tracking-wider mb-2">
-                  Oportunidad de Mercado:
+              <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/[0.04]">
+                <h3 className="text-xs font-mono font-bold text-white uppercase tracking-wider mb-2">
+                  OPORTUNIDAD DE MERCADO:
                 </h3>
-                <p className="text-xs text-slate-300 leading-relaxed">
+                <p className="text-xs text-zinc-400 leading-relaxed font-sans">
                   {project.targetAudience.marketOpportunity}
                 </p>
               </div>
             </div>
           </div>
 
-          {/* Section 5: Viabilidad Comercial & Modelo de Monetización */}
-          <div className="rounded-3xl p-6 sm:p-8 border border-emerald-500/30 bg-gradient-to-br from-emerald-950/30 via-[#0d1627] to-[#090d16]">
-            <div className="flex items-center gap-2.5 text-emerald-400 font-bold text-xl mb-4">
-              <DollarSign className="w-6 h-6" />
-              <h2>¿Puede llegar a ser monetizable? (Modelo de Negocio)</h2>
+          {/* Section 5: Viabilidad Comercial & Monetización */}
+          <div className="p-8 rounded-3xl bg-[#09090B]/90 border border-[#00FF94]/30 space-y-6">
+            <div className="flex items-center gap-2 font-mono text-xs font-bold uppercase text-[#00FF94]">
+              <DollarSign className="w-5 h-5" />
+              <span>05 // MODELO DE MONETIZACIÓN &amp; NEGOCIO</span>
             </div>
 
-            <p className="text-slate-300 text-sm leading-relaxed mb-6">
+            <p className="text-zinc-300 text-sm leading-relaxed font-sans">
               {project.monetization.commercialPotential}
             </p>
 
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
-              <div className="p-4 rounded-2xl bg-[#0d1322] border border-white/5">
-                <span className="text-[11px] font-mono text-slate-400 block mb-1">Modelo de Monetización</span>
-                <span className="text-sm font-bold text-emerald-300 block">{project.monetization.model}</span>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/[0.06]">
+                <span className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest block mb-1">MODELO</span>
+                <span className="text-sm font-mono font-bold text-[#00FF94] block">{project.monetization.model}</span>
               </div>
 
-              <div className="p-4 rounded-2xl bg-[#0d1322] border border-white/5">
-                <span className="text-[11px] font-mono text-slate-400 block mb-1">Estrategia de Precios</span>
-                <span className="text-xs font-medium text-slate-200 block">{project.monetization.pricingStrategy}</span>
+              <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/[0.06]">
+                <span className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest block mb-1">PRECIOS</span>
+                <span className="text-xs font-mono text-zinc-300 block">{project.monetization.pricingStrategy}</span>
               </div>
 
-              <div className="p-4 rounded-2xl bg-[#0d1322] border border-white/5">
-                <span className="text-[11px] font-mono text-slate-400 block mb-1">Estimación de Ingresos</span>
-                <span className="text-xs font-medium text-amber-300 block">{project.monetization.estimatedRevenue || "Escalable según tracción"}</span>
+              <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/[0.06]">
+                <span className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest block mb-1">PROYECCIÓN MRR</span>
+                <span className="text-xs font-mono text-white block">{project.monetization.estimatedRevenue || "Escalable"}</span>
               </div>
             </div>
 
             {project.monetization.forSale && (
-              <div className="p-4 rounded-2xl bg-emerald-900/20 border border-emerald-500/30 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+              <div className="p-4 rounded-2xl bg-[#00FF94]/[0.05] border border-[#00FF94]/30 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                 <div>
-                  <span className="text-xs font-bold text-emerald-400 uppercase tracking-wider block">
-                    Disponible para Compra / Traspaso
+                  <span className="text-xs font-mono font-bold text-[#00FF94] uppercase tracking-wider block">
+                    DISPONIBLE PARA ADQUISICIÓN / TRASPASO
                   </span>
-                  <p className="text-xs text-slate-300 mt-0.5">
+                  <p className="text-xs text-zinc-300 mt-0.5 font-sans">
                     {project.monetization.forSale.contactNote}
                   </p>
                 </div>
                 <Link
                   href="/#contacto"
-                  className="shrink-0 px-4 py-2 rounded-xl text-xs font-bold bg-emerald-500 text-black hover:bg-emerald-400 transition-colors"
+                  className="shrink-0 px-4 py-2 rounded-full text-xs font-mono font-bold bg-[#00FF94] text-black hover:bg-[#5CFFB8]"
                 >
-                  Contactar Oferta
+                  CONTACTAR OFERTA
                 </Link>
               </div>
             )}
           </div>
 
-          {/* Section 6: Fotos & Galería de Capturas */}
-          <div className="glass-card rounded-3xl p-6 sm:p-8 border border-white/10">
-            <h2 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
-              <Layers className="w-5 h-5 text-indigo-400" />
-              <span>Fotos & Galería de Pantallas de la Aplicación</span>
+          {/* Section 6: Fotos & Galería */}
+          <div className="p-8 rounded-3xl bg-[#09090B]/80 border border-white/[0.08]">
+            <h2 className="text-xl font-bold text-white mb-6 font-mono uppercase tracking-wider flex items-center gap-2">
+              <Layers className="w-4 h-4 text-[#00FF94]" />
+              <span>06 // GALERÍA DE PANTALLAS &amp; ARTEFACTOS</span>
             </h2>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {project.screenshots.map((screen, idx) => (
-                <div key={idx} className="rounded-2xl overflow-hidden border border-white/10 bg-slate-900 flex flex-col group">
+                <div key={idx} className="rounded-2xl overflow-hidden border border-white/[0.08] bg-[#0A0A0E] flex flex-col group">
                   <div className="relative h-60 w-full overflow-hidden">
-                    <Image
-                      src={screen.url}
-                      alt={screen.title}
-                      fill
-                      className="object-cover group-hover:scale-105 transition-transform duration-500"
-                      sizes="(max-width: 768px) 100vw, 50vw"
+                    <GenerativeArtwork
+                      slug={project.slug}
+                      title={screen.title}
+                      imageUrl={screen.url}
                     />
                   </div>
-                  <div className="p-4 bg-slate-900/90 border-t border-white/5 flex-1 flex flex-col justify-between">
-                    <div>
-                      <h3 className="font-bold text-white text-sm mb-1">{screen.title}</h3>
-                      <p className="text-xs text-slate-400 leading-relaxed">{screen.description}</p>
-                    </div>
+                  <div className="p-4 bg-[#09090B] border-t border-white/[0.04]">
+                    <h3 className="font-bold text-white text-sm mb-1 font-sans">{screen.title}</h3>
+                    <p className="text-xs text-zinc-400 font-sans leading-relaxed">{screen.description}</p>
                   </div>
                 </div>
               ))}
             </div>
           </div>
 
-          {/* Section 7: Lenguajes de Programación & Stack Tecnológico */}
-          <div className="glass-card rounded-3xl p-6 sm:p-8 border border-white/10">
-            <div className="flex items-center gap-2.5 text-indigo-400 font-bold text-xl mb-6">
-              <Code2 className="w-6 h-6" />
-              <h2>Lenguajes de Programación & Arquitectura de Software</h2>
+          {/* Section 7: Stack Tecnológico & Arquitectura */}
+          <div className="p-8 rounded-3xl bg-[#09090B]/80 border border-white/[0.08] space-y-6">
+            <div className="flex items-center gap-2 font-mono text-xs font-bold uppercase text-white">
+              <Code2 className="w-5 h-5 text-[#00FF94]" />
+              <span>07 // STACK TECNOLÓGICO &amp; ARQUITECTURA DE CÓDIGO</span>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-              {/* Lenguajes */}
-              <div className="p-4 rounded-2xl bg-slate-900/80 border border-white/5">
-                <div className="flex items-center gap-2 text-indigo-300 font-bold text-xs uppercase tracking-wider mb-3">
-                  <Code2 className="w-4 h-4" />
-                  <span>Lenguajes</span>
-                </div>
-                <div className="flex flex-wrap gap-1.5">
-                  {project.techStack.languages.map((lang) => (
-                    <span key={lang} className="text-xs px-2.5 py-1 rounded-lg bg-indigo-950/60 text-indigo-200 border border-indigo-500/30 font-mono">
-                      {lang}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/[0.04]">
+                <span className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest block mb-2">LENGUAJES</span>
+                <div className="flex flex-wrap gap-1">
+                  {project.techStack.languages.map((l) => (
+                    <span key={l} className="text-xs font-mono px-2 py-0.5 rounded bg-white/[0.04] text-white border border-white/[0.08]">
+                      {l}
                     </span>
                   ))}
                 </div>
               </div>
 
-              {/* Frameworks */}
-              <div className="p-4 rounded-2xl bg-slate-900/80 border border-white/5">
-                <div className="flex items-center gap-2 text-cyan-300 font-bold text-xs uppercase tracking-wider mb-3">
-                  <Layers className="w-4 h-4" />
-                  <span>Frameworks</span>
-                </div>
-                <div className="flex flex-wrap gap-1.5">
-                  {project.techStack.frameworks.map((fw) => (
-                    <span key={fw} className="text-xs px-2.5 py-1 rounded-lg bg-cyan-950/60 text-cyan-200 border border-cyan-500/30 font-mono">
-                      {fw}
+              <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/[0.04]">
+                <span className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest block mb-2">FRAMEWORKS</span>
+                <div className="flex flex-wrap gap-1">
+                  {project.techStack.frameworks.map((f) => (
+                    <span key={f} className="text-xs font-mono px-2 py-0.5 rounded bg-white/[0.04] text-white border border-white/[0.08]">
+                      {f}
                     </span>
                   ))}
                 </div>
               </div>
 
-              {/* Base de Datos */}
-              <div className="p-4 rounded-2xl bg-slate-900/80 border border-white/5">
-                <div className="flex items-center gap-2 text-emerald-300 font-bold text-xs uppercase tracking-wider mb-3">
-                  <Database className="w-4 h-4" />
-                  <span>Bases de Datos</span>
-                </div>
-                <div className="flex flex-wrap gap-1.5">
-                  {project.techStack.databases.map((db) => (
-                    <span key={db} className="text-xs px-2.5 py-1 rounded-lg bg-emerald-950/60 text-emerald-200 border border-emerald-500/30 font-mono">
-                      {db}
+              <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/[0.04]">
+                <span className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest block mb-2">BASES DE DATOS</span>
+                <div className="flex flex-wrap gap-1">
+                  {project.techStack.databases.map((d) => (
+                    <span key={d} className="text-xs font-mono px-2 py-0.5 rounded bg-white/[0.04] text-white border border-white/[0.08]">
+                      {d}
                     </span>
                   ))}
                 </div>
               </div>
 
-              {/* Cloud & DevOps */}
-              <div className="p-4 rounded-2xl bg-slate-900/80 border border-white/5">
-                <div className="flex items-center gap-2 text-amber-300 font-bold text-xs uppercase tracking-wider mb-3">
-                  <Cloud className="w-4 h-4" />
-                  <span>Cloud & Despliegue</span>
-                </div>
-                <div className="flex flex-wrap gap-1.5">
+              <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/[0.04]">
+                <span className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest block mb-2">CLOUD &amp; DEVOPS</span>
+                <div className="flex flex-wrap gap-1">
                   {project.techStack.cloudAndDevops.map((c) => (
-                    <span key={c} className="text-xs px-2.5 py-1 rounded-lg bg-amber-950/60 text-amber-200 border border-amber-500/30 font-mono">
+                    <span key={c} className="text-xs font-mono px-2 py-0.5 rounded bg-white/[0.04] text-white border border-white/[0.08]">
                       {c}
                     </span>
                   ))}
@@ -428,15 +397,14 @@ export default function ProjectDetailPage({ params }: ProjectPageProps) {
               </div>
             </div>
 
-            {/* Decisiones de Arquitectura */}
-            <div className="p-5 rounded-2xl bg-slate-900/50 border border-white/5">
-              <h3 className="text-xs font-bold text-white uppercase tracking-wider mb-3">
-                Decisiones Clave de Arquitectura & Rendimiento:
+            <div className="p-5 rounded-2xl bg-white/[0.02] border border-white/[0.04]">
+              <h3 className="text-xs font-mono font-bold text-white uppercase tracking-wider mb-3">
+                DECISIONES TÉCNICAS CLAVE:
               </h3>
               <ul className="space-y-2">
                 {project.techStack.architectureHighlights.map((arch, i) => (
-                  <li key={i} className="flex items-start gap-2.5 text-xs text-slate-300">
-                    <ShieldCheck className="w-4 h-4 text-indigo-400 shrink-0 mt-0.5" />
+                  <li key={i} className="flex items-start gap-2 text-xs text-zinc-400 font-sans">
+                    <ShieldCheck className="w-4 h-4 text-[#00FF94] shrink-0 mt-0.5" />
                     <span>{arch}</span>
                   </li>
                 ))}
@@ -444,21 +412,21 @@ export default function ProjectDetailPage({ params }: ProjectPageProps) {
             </div>
           </div>
 
-          {/* Section 8: Funcionalidades Clave */}
-          <div className="glass-card rounded-3xl p-6 sm:p-8 border border-white/10">
-            <h2 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
-              <CheckCircle2 className="w-5 h-5 text-cyan-400" />
-              <span>Funcionalidades Clave Desarrolladas</span>
+          {/* Section 8: Key Features */}
+          <div className="p-8 rounded-3xl bg-[#09090B]/80 border border-white/[0.08]">
+            <h2 className="text-xl font-bold text-white mb-6 font-mono uppercase tracking-wider flex items-center gap-2">
+              <CheckCircle2 className="w-4 h-4 text-[#00FF94]" />
+              <span>08 // FUNCIONALIDADES CLAVE IMPLEMENTADAS</span>
             </h2>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {project.keyFeatures.map((feat, i) => (
-                <div key={i} className="p-4 rounded-2xl bg-slate-900/60 border border-white/5">
-                  <h3 className="font-bold text-white text-sm mb-1.5 flex items-center gap-2">
-                    <span className="w-2 h-2 rounded-full bg-cyan-400" />
+                <div key={i} className="p-4 rounded-2xl bg-white/[0.02] border border-white/[0.04]">
+                  <h3 className="font-bold text-white text-sm mb-1 font-mono flex items-center gap-2">
+                    <span className="text-[#00FF94]">▪</span>
                     {feat.title}
                   </h3>
-                  <p className="text-xs text-slate-400 leading-relaxed">
+                  <p className="text-xs text-zinc-400 font-sans leading-relaxed">
                     {feat.description}
                   </p>
                 </div>
@@ -468,24 +436,24 @@ export default function ProjectDetailPage({ params }: ProjectPageProps) {
 
         </div>
 
-        {/* Previous / Next Project Navigation Bar */}
-        <div className="mt-16 pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4">
+        {/* Project Navigation Footer */}
+        <div className="mt-16 pt-8 border-t border-white/[0.08] flex flex-col sm:flex-row items-center justify-between gap-4 font-mono text-xs">
           {prevProject ? (
             <Link
               href={`/projects/${prevProject.slug}`}
-              className="flex items-center gap-2 text-xs font-semibold text-slate-400 hover:text-white transition-colors"
+              className="flex items-center gap-2 text-zinc-400 hover:text-[#00FF94] transition-colors"
             >
               <ArrowLeft className="w-4 h-4" />
-              <span>Anterior: {prevProject.title}</span>
+              <span>ANTERIOR: {prevProject.title.split(" - ")[0]}</span>
             </Link>
           ) : <div />}
 
           {nextProject && (
             <Link
               href={`/projects/${nextProject.slug}`}
-              className="flex items-center gap-2 text-xs font-semibold text-slate-400 hover:text-white transition-colors"
+              className="flex items-center gap-2 text-zinc-400 hover:text-[#00FF94] transition-colors"
             >
-              <span>Siguiente: {nextProject.title}</span>
+              <span>SIGUIENTE: {nextProject.title.split(" - ")[0]}</span>
               <ArrowRight className="w-4 h-4" />
             </Link>
           )}

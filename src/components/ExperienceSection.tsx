@@ -1,166 +1,231 @@
-import React from "react";
+"use client";
+
+import React, { useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { WORK_EXPERIENCE, FOUNDER_PROFILE } from "@/data/projects";
-import { Briefcase, GraduationCap, Cpu, Download, CheckCircle2, Bot, Sparkles, Languages } from "lucide-react";
+import { Terminal, Bot, GraduationCap, Languages, Download, ArrowUpRight, Cpu } from "lucide-react";
 
 export default function ExperienceSection() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start 70%", "end 80%"],
+  });
+
+  const lineHeight = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
+
   return (
-    <section id="experiencia" className="py-16 md:py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      {/* Header */}
-      <div className="text-center max-w-3xl mx-auto mb-16">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 text-indigo-400 text-xs font-medium border border-indigo-500/20 mb-3">
-          <Briefcase className="w-3.5 h-3.5" />
-          <span>Experiencia & Trayectoria Profesional</span>
+    <section id="experiencia" ref={containerRef} className="py-20 md:py-28 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+      
+      {/* Section Header */}
+      <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6 pb-6 border-b border-white/[0.06]">
+        <div>
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.03] border border-white/[0.08] text-xs font-mono text-[#00FF94] mb-4">
+            <Terminal className="w-3.5 h-3.5" />
+            <span>TRAYECTORIA // PRODUCTION SYSTEMS &amp; AI</span>
+          </div>
+          <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tightest uppercase leading-tight">
+            Experiencia &amp; Arquitectura de Sistemas
+          </h2>
+          <p className="text-sm sm:text-base text-zinc-400 mt-2 max-w-2xl font-sans">
+            Desarrollo corporativo en empresas de ingeniería industrial, desarrollo embebido de bajo nivel y orquestación autónoma de flujos de IA.
+          </p>
         </div>
-        <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
-          Ingeniería de Producción, Embebidos & Flujos de IA
-        </h2>
-        <p className="text-sm sm:text-base text-slate-400 mt-2">
-          Experiencia profesional contrastada en empresas de ingeniería industrial combinada con el diseño de arquitecturas modernas y flujos agénticos autónomos.
-        </p>
+
+        <a
+          href={FOUNDER_PROFILE.cvUrl}
+          download="CV_Daniel_Martinez_Mira.pdf"
+          className="shrink-0 inline-flex items-center gap-2 px-4 py-2 rounded-full font-mono text-xs font-bold bg-white/[0.05] hover:bg-[#00FF94] text-white hover:text-black border border-white/[0.1] hover:border-transparent transition-all"
+        >
+          <Download className="w-3.5 h-3.5" />
+          <span>DESCARGAR CV COMPLETO (.PDF)</span>
+        </a>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
         
-        {/* Left 2 Cols: Experiencia Corporativa & Flujos Agénticos */}
-        <div className="lg:col-span-2 space-y-8">
+        {/* Left Column: Vertical Dynamic SVG Timeline */}
+        <div className="lg:col-span-8 relative">
           
-          {/* Experiencia Balterra */}
-          {WORK_EXPERIENCE.map((exp, idx) => (
-            <div key={idx} className="glass-card rounded-3xl p-6 sm:p-8 border border-white/10 relative overflow-hidden">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4 pb-4 border-b border-white/10">
-                <div>
-                  <div className="flex items-center gap-2">
-                    <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
-                    <h3 className="text-xl font-bold text-white tracking-tight">{exp.role}</h3>
-                  </div>
-                  <p className="text-sm font-semibold text-indigo-400 mt-0.5">{exp.company}</p>
-                </div>
-                <div className="text-left sm:text-right">
-                  <span className="text-xs font-mono px-3 py-1 rounded-full bg-slate-900 text-slate-300 border border-white/10">
-                    {exp.period}
-                  </span>
-                  <p className="text-[11px] text-slate-400 mt-1">{exp.type}</p>
-                </div>
-              </div>
-
-              {/* Responsibilities */}
-              <div className="space-y-3 mb-6">
-                {exp.responsibilities.map((resp, i) => (
-                  <div key={i} className="flex items-start gap-3 text-xs sm:text-sm text-slate-300 leading-relaxed">
-                    <CheckCircle2 className="w-4 h-4 text-cyan-400 shrink-0 mt-0.5" />
-                    <span>{resp}</span>
-                  </div>
-                ))}
-              </div>
-
-              {/* Tech stack tags */}
-              <div className="flex flex-wrap gap-1.5 pt-4 border-t border-white/5">
-                {exp.stack.map((item) => (
-                  <span
-                    key={item}
-                    className="text-[11px] font-mono px-2.5 py-1 rounded-lg bg-indigo-950/60 text-indigo-300 border border-indigo-500/20"
-                  >
-                    {item}
-                  </span>
-                ))}
-              </div>
-            </div>
-          ))}
-
-          {/* AI Engineering & Agentic Workflows Box */}
-          <div className="glass-card rounded-3xl p-6 sm:p-8 border border-purple-500/20 bg-purple-950/10">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="p-2 rounded-xl bg-purple-500/20 text-purple-400 border border-purple-500/30">
-                <Bot className="w-5 h-5" />
-              </div>
-              <div>
-                <h3 className="text-lg font-bold text-white">Ingeniería de Inteligencia Artificial & Flujos Agénticos</h3>
-                <p className="text-xs text-purple-300">Desarrollo autónomo y orquestación avanzada de LLMs</p>
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs text-slate-300">
-              <div className="p-3.5 rounded-2xl bg-slate-900/60 border border-white/5">
-                <p className="font-bold text-white mb-1">Pipeline Spec.md Autónomo</p>
-                <p className="text-slate-400">Diseño desacoplado con n8n y Google Gemini Pro/Flash como arquitecto de contratos técnicos y esquemas OpenAPI/DDL deterministas.</p>
-              </div>
-
-              <div className="p-3.5 rounded-2xl bg-slate-900/60 border border-white/5">
-                <p className="font-bold text-white mb-1">Síntesis Agéntica en Fases (DAG)</p>
-                <p className="text-slate-400">Ejecución en Grafo Dirigido Acíclico (auto_coder / Cline) con esqueletización de AST y bucles de autocorrección sintáctica.</p>
-              </div>
-
-              <div className="p-3.5 rounded-2xl bg-slate-900/60 border border-white/5">
-                <p className="font-bold text-white mb-1">Orquestación Local (Ollama)</p>
-                <p className="text-slate-400">Despliegue y ejecución de LLMs locales (Qwen, DeepSeek, Llama) para entornos de alta privacidad y auditoría de código.</p>
-              </div>
-
-              <div className="p-3.5 rounded-2xl bg-slate-900/60 border border-white/5">
-                <p className="font-bold text-white mb-1">Spec-Driven Development</p>
-                <p className="text-slate-400">Uso estratégico de agentes en IDEs (Claude Code, Cursor) bajo rigurosas suites de testing unitario y de integración.</p>
-              </div>
-            </div>
+          {/* Animated Vertical Line */}
+          <div className="absolute left-4 top-3 bottom-8 w-[2px] bg-white/[0.08] hidden sm:block">
+            <motion.div
+              style={{ height: lineHeight }}
+              className="w-full bg-[#00FF94] shadow-[0_0_12px_#00FF94]"
+            />
           </div>
 
-        </div>
+          <div className="space-y-12">
+            
+            {/* Experience Item: Balterra Ingeniería */}
+            {WORK_EXPERIENCE.map((exp, index) => (
+              <div key={index} className="relative sm:pl-12 group">
+                
+                {/* Node Milestone Icon */}
+                <div className="absolute left-2.5 top-2 -translate-x-1/2 w-4 h-4 rounded-full bg-[#050505] border-2 border-[#00FF94] shadow-[0_0_10px_#00FF94] hidden sm:block z-10" />
 
-        {/* Right Col: Formación Académica, Idiomas & Descarga CV */}
-        <div className="space-y-6">
-          
-          {/* Educación */}
-          <div className="glass-card rounded-3xl p-6 border border-white/10">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="p-2.5 rounded-xl bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
-                <GraduationCap className="w-5 h-5" />
+                <div className="p-6 sm:p-8 rounded-3xl bg-[#09090B]/80 border border-white/[0.08] backdrop-blur-md transition-all duration-300 hover:border-white/[0.2]">
+                  
+                  {/* Top Bar */}
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4 pb-4 border-b border-white/[0.06]">
+                    <div>
+                      <span className="text-[11px] font-mono text-[#00FF94] uppercase tracking-wider block">
+                        JORNADA COMPLETA // EN PRODUCCIÓN
+                      </span>
+                      <h3 className="text-xl sm:text-2xl font-extrabold text-white tracking-tightest">
+                        {exp.role}
+                      </h3>
+                      <p className="text-sm font-semibold text-zinc-300 mt-0.5">{exp.company}</p>
+                    </div>
+
+                    <div className="text-left sm:text-right">
+                      <span className="text-xs font-mono px-3 py-1 rounded-full bg-white/[0.04] text-zinc-300 border border-white/[0.08]">
+                        {exp.period}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Responsibilities */}
+                  <div className="space-y-3 mb-6">
+                    {exp.responsibilities.map((resp, i) => (
+                      <div key={i} className="flex items-start gap-3 text-xs sm:text-sm text-zinc-400 leading-relaxed">
+                        <span className="text-[#00FF94] font-mono shrink-0 mt-0.5">❯</span>
+                        <span>{resp}</span>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Stack Chips */}
+                  <div className="flex flex-wrap gap-1.5 pt-4 border-t border-white/[0.06]">
+                    {exp.stack.map((item) => (
+                      <span
+                        key={item}
+                        className="text-[10px] font-mono px-2.5 py-1 rounded-md bg-white/[0.03] text-zinc-300 border border-white/[0.06]"
+                      >
+                        {item}
+                      </span>
+                    ))}
+                  </div>
+
+                </div>
               </div>
-              <h3 className="text-base font-bold text-white">Formación Académica</h3>
+            ))}
+
+            {/* AI Engineering Architecture Artifact (Terminal Style) */}
+            <div className="relative sm:pl-12 group">
+              <div className="absolute left-2.5 top-2 -translate-x-1/2 w-4 h-4 rounded-full bg-[#050505] border-2 border-white/40 group-hover:border-[#00FF94] transition-colors hidden sm:block z-10" />
+
+              <div className="p-6 sm:p-8 rounded-3xl bg-[#09090B]/90 border border-white/[0.08] backdrop-blur-md space-y-6">
+                
+                <div className="flex items-center gap-3 pb-4 border-b border-white/[0.06]">
+                  <div className="p-2.5 rounded-xl bg-white/[0.04] border border-white/[0.08] text-[#00FF94]">
+                    <Bot className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <span className="text-[10px] font-mono text-[#00FF94] tracking-widest uppercase">
+                      AI ENGINEERING // AGENTIC ARCHITECTURE
+                    </span>
+                    <h3 className="text-xl font-bold text-white tracking-tight">
+                      Flujos Agénticos &amp; Síntesis Autónoma
+                    </h3>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs font-mono">
+                  <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/[0.04]">
+                    <p className="text-white font-bold mb-1">// PIPELINE SPEC.MD</p>
+                    <p className="text-zinc-400 font-sans text-xs leading-relaxed">
+                      Orquestación desacoplada con n8n y Google Gemini Pro/Flash como arquitecto autónomo de esquemas OpenAPI y DDL estrictos.
+                    </p>
+                  </div>
+
+                  <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/[0.04]">
+                    <p className="text-white font-bold mb-1">// SÍNTESIS EN DAG</p>
+                    <p className="text-zinc-400 font-sans text-xs leading-relaxed">
+                      Motor de síntesis de código en Grafo Dirigido Acíclico con esqueletización de AST y bucles de autocorrección sintáctica.
+                    </p>
+                  </div>
+
+                  <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/[0.04]">
+                    <p className="text-white font-bold mb-1">// OLLAMA AIR-GAPPED</p>
+                    <p className="text-zinc-400 font-sans text-xs leading-relaxed">
+                      Despliegue local de modelos Qwen, DeepSeek y Llama para entornos empresariales de máxima confidencialidad.
+                    </p>
+                  </div>
+
+                  <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/[0.04]">
+                    <p className="text-white font-bold mb-1">// SPEC-DRIVEN TEST</p>
+                    <p className="text-zinc-400 font-sans text-xs leading-relaxed">
+                      Desarrollo asistido en IDEs bajo cobertura rigurosa con suites de testing automatizado (Vitest, xUnit, JUnit).
+                    </p>
+                  </div>
+                </div>
+
+              </div>
             </div>
 
-            <div className="p-4 rounded-2xl bg-slate-900/70 border border-white/5 space-y-1">
-              <h4 className="text-sm font-bold text-white">{FOUNDER_PROFILE.education.degree}</h4>
-              <p className="text-xs text-indigo-400 font-medium">{FOUNDER_PROFILE.education.institution}</p>
-              <p className="text-[11px] font-mono text-slate-400 pt-1">{FOUNDER_PROFILE.education.period}</p>
+          </div>
+        </div>
+
+        {/* Right Column: Academic Credentials & Languages */}
+        <div className="lg:col-span-4 space-y-6">
+          
+          {/* Educación */}
+          <div className="p-6 rounded-3xl bg-[#09090B]/80 border border-white/[0.08] backdrop-blur-md">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="p-2 rounded-xl bg-white/[0.04] text-[#00FF94] border border-white/[0.06]">
+                <GraduationCap className="w-5 h-5" />
+              </div>
+              <h3 className="text-sm font-mono font-bold text-white uppercase tracking-wider">
+                Formación Académica
+              </h3>
+            </div>
+
+            <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/[0.05] space-y-1">
+              <p className="text-xs font-mono text-[#00FF94]">{FOUNDER_PROFILE.education.period}</p>
+              <h4 className="text-sm font-bold text-white leading-snug">
+                {FOUNDER_PROFILE.education.degree}
+              </h4>
+              <p className="text-xs text-zinc-400 font-sans">
+                {FOUNDER_PROFILE.education.institution}
+              </p>
             </div>
           </div>
 
           {/* Idiomas */}
-          <div className="glass-card rounded-3xl p-6 border border-white/10">
+          <div className="p-6 rounded-3xl bg-[#09090B]/80 border border-white/[0.08] backdrop-blur-md">
             <div className="flex items-center gap-3 mb-4">
-              <div className="p-2.5 rounded-xl bg-amber-500/10 text-amber-400 border border-amber-500/20">
+              <div className="p-2 rounded-xl bg-white/[0.04] text-[#00FF94] border border-white/[0.06]">
                 <Languages className="w-5 h-5" />
               </div>
-              <h3 className="text-base font-bold text-white">Idiomas</h3>
+              <h3 className="text-sm font-mono font-bold text-white uppercase tracking-wider">
+                Competencia Lingüística
+              </h3>
             </div>
 
-            <div className="space-y-2.5">
+            <div className="space-y-2">
               {FOUNDER_PROFILE.languages.map((lang) => (
-                <div key={lang.name} className="flex items-center justify-between p-3 rounded-xl bg-slate-900/60 border border-white/5 text-xs">
-                  <span className="font-semibold text-white">{lang.name}</span>
-                  <span className="font-mono text-slate-400 text-[11px]">{lang.level}</span>
+                <div
+                  key={lang.name}
+                  className="flex items-center justify-between p-3 rounded-xl bg-white/[0.02] border border-white/[0.05] text-xs font-mono"
+                >
+                  <span className="text-white font-medium">{lang.name}</span>
+                  <span className="text-zinc-500">{lang.level}</span>
                 </div>
               ))}
             </div>
           </div>
 
-          {/* CV Download Card */}
-          <div className="rounded-3xl p-6 border border-indigo-500/30 bg-gradient-to-br from-indigo-950/40 via-[#0d1322] to-[#090d16] text-center space-y-4">
-            <div className="w-12 h-12 rounded-2xl bg-indigo-500/20 border border-indigo-500/40 text-indigo-400 flex items-center justify-center mx-auto">
-              <Download className="w-6 h-6" />
+          {/* Location & Timezone Beacon */}
+          <div className="p-6 rounded-3xl bg-white/[0.02] border border-white/[0.06] text-xs font-mono space-y-3">
+            <div className="flex items-center justify-between text-zinc-500">
+              <span>LOCAL TIMEZONE:</span>
+              <span className="text-white">UTC+1 (MADRID/VALENCIA)</span>
             </div>
-            <div>
-              <h4 className="text-base font-bold text-white">Currículum Vitae Completo</h4>
-              <p className="text-xs text-slate-300 mt-1">
-                Descarga mi CV en formato PDF con el desglose técnico y referencias profesionales.
-              </p>
+            <div className="flex items-center justify-between text-zinc-500">
+              <span>WORK MODE:</span>
+              <span className="text-[#00FF94]">HYBRID // REMOTE // CONTRACT</span>
             </div>
-            <a
-              href={FOUNDER_PROFILE.cvUrl}
-              download="CV_Daniel_Martinez_Mira.pdf"
-              className="inline-flex items-center justify-center gap-2 w-full py-3 rounded-xl text-xs font-bold bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg shadow-indigo-600/30 transition-all hover:-translate-y-0.5"
-            >
-              <Download className="w-4 h-4" />
-              <span>Descargar CV en PDF</span>
-            </a>
           </div>
 
         </div>
