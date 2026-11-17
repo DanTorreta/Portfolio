@@ -1,5 +1,6 @@
 import Hero from "@/components/Hero";
 import ProjectShowcase from "@/components/ProjectShowcase";
+import ExperienceSection from "@/components/ExperienceSection";
 import TechStackSection from "@/components/TechStackSection";
 import MonetizationSection from "@/components/MonetizationSection";
 import ContactSection from "@/components/ContactSection";
@@ -10,6 +11,7 @@ export default function HomePage() {
     <div className="space-y-4">
       <Hero />
       <ProjectShowcase projects={PROJECTS_DATA} />
+      <ExperienceSection />
       <TechStackSection />
       <MonetizationSection />
       <ContactSection />

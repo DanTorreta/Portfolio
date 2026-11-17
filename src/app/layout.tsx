@@ -2,25 +2,33 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { FOUNDER_PROFILE } from "@/data/projects";
 
 export const metadata: Metadata = {
-  title: "Daniel | Ingeniero de Software & Creador de Apps & SaaS",
-  description: "Portfolio de ingeniería de software con proyectos de negocio reales: SaaS B2B, Inteligencia Artificial, PWA y soluciones listas para desplegar, monetizar o adquirir.",
+  title: `${FOUNDER_PROFILE.name} | Ingeniero de Software & Creador de Apps`,
+  description: `${FOUNDER_PROFILE.title}. Portfolio de proyectos de ingeniería de software y SaaS listos para comercializar, desplegar o adquirir.`,
   keywords: [
+    "Daniel Martínez Mira",
     "Ingeniero de Software",
-    "Portfolio",
-    "Indie Maker",
-    "SaaS",
+    "Full-Stack Developer",
+    "Balterra Ingeniería",
+    "ASP.NET Core",
+    "C#",
+    "Java Spring Boot",
+    "React Native",
+    "Flutter",
     "TypeScript",
     "Next.js",
     "Python",
     "Vercel",
-    "Desarrollo Web",
-    "Software Comercial"
+    "Portfolio Ingeniero",
+    "AI Engineering",
+    "Ollama",
+    "Supabase"
   ],
-  authors: [{ name: "Daniel" }],
+  authors: [{ name: FOUNDER_PROFILE.name }],
   openGraph: {
-    title: "Daniel | Ingeniero de Software & Creador de Apps & SaaS",
+    title: `${FOUNDER_PROFILE.name} | Ingeniero de Software & Apps de Negocio`,
     description: "Catálogo de proyectos de software con análisis de negocio, monetización, arquitectura técnica y demos en vivo.",
     type: "website",
     locale: "es_ES",

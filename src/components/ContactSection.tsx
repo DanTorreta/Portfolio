@@ -1,11 +1,11 @@
 "use client";
 
 import React, { useState } from "react";
-import { Mail, Send, Github, Linkedin, MessageSquare, Check, Sparkles } from "lucide-react";
+import { Mail, Phone, MapPin, Send, Github, Linkedin, Check, Sparkles } from "lucide-react";
 import { PROJECTS_DATA, FOUNDER_PROFILE } from "@/data/projects";
 
 export default function ContactSection() {
-  const [selectedProject, setSelectedProject] = useState<string>("crold");
+  const [selectedProject, setSelectedProject] = useState<string>("crold-saas");
   const [name, setName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [message, setMessage] = useState<string>("");
@@ -13,9 +13,8 @@ export default function ContactSection() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Preparamos mailto o feedback visual
     const mailtoSubject = encodeURIComponent(`Interés en proyecto: ${selectedProject} - De: ${name}`);
-    const mailtoBody = encodeURIComponent(`Hola Daniel,\n\nSoy ${name} (${email}).\n\nEstoy interesado en tu proyecto "${selectedProject}".\n\nMensaje:\n${message}\n\nUn saludo.`);
+    const mailtoBody = encodeURIComponent(`Hola Daniel,\n\nSoy ${name} (${email}).\n\nEstoy interesado en tu proyecto "${selectedProject}".\n\nMensaje:\n${message}\n\nUn saludo cordial.`);
     window.location.href = `mailto:${FOUNDER_PROFILE.email}?subject=${mailtoSubject}&body=${mailtoBody}`;
     setSubmitted(true);
   };
@@ -29,17 +28,18 @@ export default function ContactSection() {
           <div>
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 text-amber-400 text-xs font-medium border border-amber-500/20 mb-3">
               <Sparkles className="w-3.5 h-3.5" />
-              <span>Contacto Directo con el Desarrollador</span>
+              <span>Contacto Directo con {FOUNDER_PROFILE.name}</span>
             </div>
             <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight mb-4">
               ¿Hablamos sobre un proyecto o una oportunidad de negocio?
             </h2>
             <p className="text-sm sm:text-base text-slate-300 mb-8 leading-relaxed">
-              Tanto si deseas adquirir una de las aplicaciones, licenciar el código para tu propia empresa, o estás buscando un ingeniero de software con mentalidad de producto para un desarrollo clave, contáctame directamente.
+              Tanto si deseas adquirir el código de alguna de mis aplicaciones, licenciar una solución para tu empresa, o necesitas un ingeniero de software con perfil Full-Stack e IA para un desarrollo clave, contáctame directamente:
             </p>
 
             {/* Direct Channels */}
-            <div className="space-y-4 mb-8">
+            <div className="space-y-3 mb-8">
+              {/* Email */}
               <a
                 href={`mailto:${FOUNDER_PROFILE.email}`}
                 className="flex items-center gap-4 p-4 rounded-2xl glass-card border border-white/10 hover:border-indigo-500/40 transition-colors group"
@@ -48,33 +48,40 @@ export default function ContactSection() {
                   <Mail className="w-5 h-5" />
                 </div>
                 <div>
-                  <p className="text-xs text-slate-400 font-mono">Correo Electrónico</p>
+                  <p className="text-[11px] text-slate-400 font-mono">Correo Electrónico</p>
                   <p className="text-sm font-semibold text-white group-hover:text-indigo-400 transition-colors">
                     {FOUNDER_PROFILE.email}
                   </p>
                 </div>
               </a>
 
-              <div className="grid grid-cols-2 gap-3">
-                <a
-                  href={FOUNDER_PROFILE.github}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-3 p-3.5 rounded-xl bg-slate-900/80 border border-white/10 hover:bg-slate-800 transition-colors text-slate-300 hover:text-white"
-                >
-                  <Github className="w-4 h-4 text-slate-400" />
-                  <span className="text-xs font-medium">GitHub Repos</span>
-                </a>
+              {/* Phone */}
+              <a
+                href={`tel:${FOUNDER_PROFILE.phone.replace(/[^0-9+]/g, '')}`}
+                className="flex items-center gap-4 p-4 rounded-2xl glass-card border border-white/10 hover:border-emerald-500/40 transition-colors group"
+              >
+                <div className="w-10 h-10 rounded-xl bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center text-emerald-400 group-hover:scale-110 transition-transform">
+                  <Phone className="w-5 h-5" />
+                </div>
+                <div>
+                  <p className="text-[11px] text-slate-400 font-mono">Teléfono / WhatsApp</p>
+                  <p className="text-sm font-semibold text-white group-hover:text-emerald-400 transition-colors">
+                    {FOUNDER_PROFILE.phone}
+                  </p>
+                </div>
+              </a>
 
-                <a
-                  href={FOUNDER_PROFILE.linkedin}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-3 p-3.5 rounded-xl bg-slate-900/80 border border-white/10 hover:bg-slate-800 transition-colors text-slate-300 hover:text-white"
-                >
-                  <Linkedin className="w-4 h-4 text-blue-400" />
-                  <span className="text-xs font-medium">LinkedIn Profile</span>
-                </a>
+              {/* Location */}
+              <div className="flex items-center gap-4 p-4 rounded-2xl glass-card border border-white/10">
+                <div className="w-10 h-10 rounded-xl bg-rose-500/15 border border-rose-500/30 flex items-center justify-center text-rose-400">
+                  <MapPin className="w-5 h-5" />
+                </div>
+                <div>
+                  <p className="text-[11px] text-slate-400 font-mono">Ubicación</p>
+                  <p className="text-sm font-semibold text-white">
+                    {FOUNDER_PROFILE.location}
+                  </p>
+                </div>
               </div>
             </div>
 
@@ -123,7 +130,7 @@ export default function ContactSection() {
                     onChange={(e) => setSelectedProject(e.target.value)}
                     className="w-full px-3.5 py-2.5 rounded-xl bg-[#0d1322] text-white border border-white/10 focus:outline-none focus:border-indigo-500 text-xs"
                   >
-                    <option value="General / Todos">Propuesta General / Consultoría de Software</option>
+                    <option value="General / Consultoría">Propuesta General / Ingeniería de Software</option>
                     {PROJECTS_DATA.map((p) => (
                       <option key={p.id} value={p.title}>
                         {p.title} ({p.category})
@@ -179,10 +186,10 @@ export default function ContactSection() {
 
                 <button
                   type="submit"
-                  className="w-full flex items-center justify-center gap-2 py-3 rounded-xl font-bold text-xs bg-gradient-to-r from-indigo-500 to-cyan-500 text-white hover:from-indigo-600 hover:to-cyan-600 shadow-md shadow-indigo-500/20 transition-all hover:-translate-y-0.5"
+                  className="w-full flex items-center justify-center gap-2 py-3.5 rounded-xl font-bold text-xs bg-gradient-to-r from-indigo-500 to-cyan-500 text-white hover:from-indigo-600 hover:to-cyan-600 shadow-md shadow-indigo-500/20 transition-all hover:-translate-y-0.5"
                 >
                   <Send className="w-4 h-4" />
-                  <span>Enviar Consulta Directa</span>
+                  <span>Enviar Mensaje a Daniel</span>
                 </button>
               </form>
             )}
