@@ -184,6 +184,7 @@ export default function Hero() {
                   alt={FOUNDER_PROFILE.name}
                   fill
                   priority
+                  unoptimized
                   className="object-cover object-top filter grayscale contrast-110 group-hover:grayscale-0 transition-all duration-700 ease-out"
                   sizes="(max-width: 768px) 100vw, 400px"
                 />

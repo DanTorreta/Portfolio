@@ -18,6 +18,6 @@
 
 ### Índice Compacto del Proyecto
 - **src/app/**: globals.css(131L) | layout.tsx(61L) | page.tsx(6L)
-- **src/components/**: AppProviders.tsx(96L) | CommandPalette.tsx(217L) | ContactSection.tsx(245L) | ExecutiveSummaryModal.tsx(147L) | ExperienceSection.tsx(237L) | Footer.tsx(86L) | GenerativeArtwork.tsx(145L) | Hero.tsx(231L) | HomeView.tsx(30L) | KineticCanvas.tsx(251L) | LiveFPSMonitor.tsx(82L) | MagneticButton.tsx(66L) | MonetizationSection.tsx(158L) | Navbar.tsx(208L) | ProjectCard.tsx(131L) | ProjectDetailModal.tsx(263L) | ProjectShowcase.tsx(187L) | SpotlightCard.tsx(34L) | TechStackSection.tsx(160L)
+- **src/components/**: AppProviders.tsx(96L) | CommandPalette.tsx(217L) | ContactSection.tsx(245L) | ExecutiveSummaryModal.tsx(147L) | ExperienceSection.tsx(237L) | Footer.tsx(86L) | GenerativeArtwork.tsx(146L) | Hero.tsx(232L) | HomeView.tsx(30L) | KineticCanvas.tsx(251L) | LiveFPSMonitor.tsx(82L) | MagneticButton.tsx(66L) | MonetizationSection.tsx(158L) | Navbar.tsx(209L) | ProjectCard.tsx(131L) | ProjectDetailModal.tsx(263L) | ProjectShowcase.tsx(187L) | SpotlightCard.tsx(34L) | TechStackSection.tsx(160L)
 - **src/lib/**: utils.ts(39L)
 - **src/types/**: project.ts(137L)

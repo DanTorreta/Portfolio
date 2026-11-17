@@ -26,6 +26,7 @@ export default function GenerativeArtwork({
           src={imageUrl}
           alt={title}
           fill
+          unoptimized
           className="object-cover object-center filter contrast-105 transition-transform duration-700 ease-out group-hover:scale-105"
           onError={() => setImageError(true)}
           sizes="(max-width: 768px) 100vw, 600px"

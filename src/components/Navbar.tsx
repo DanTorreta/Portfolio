@@ -73,6 +73,7 @@ export default function Navbar({ onOpenCommandPalette }: NavbarProps) {
                 alt={FOUNDER_PROFILE.name}
                 fill
                 priority
+                unoptimized
                 className="object-cover object-top"
                 sizes="32px"
               />
