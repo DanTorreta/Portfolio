@@ -13,11 +13,12 @@
 ## 2. 🗺️ MAPA AUTO-SINCRONIZADO (`node sync-map.cjs`)
 ### Archivos Grandes (>350L) — Coordenadas Quirúrgicas
 - **src/app/projects/[slug]/page.tsx**(466L): ProjectDetailPage[53-466]
-- **src/components/ProjectArchitectureDrawer.tsx**(521L): ProjectArchitectureDrawe[17-521]
-- **src/data/projects.ts**(928L): TechSkillItem[3-54] WORK_EXPERIENCE[55-784] TECH_SKILLS[785-928]
+- **src/components/ContactSection.tsx**(365L): ContactSection[15-365]
+- **src/components/ProjectArchitectureDrawer.tsx**(537L): ProjectArchitectureDrawe[18-537]
+- **src/data/projects.ts**(926L): TechSkillItem[3-54] WORK_EXPERIENCE[55-782] TECH_SKILLS[783-926]
 
 ### Índice Compacto del Proyecto
-- **src/app/**: globals.css(131L) | layout.tsx(61L) | page.tsx(6L)
-- **src/components/**: AppProviders.tsx(96L) | CommandPalette.tsx(217L) | ContactSection.tsx(245L) | ExecutiveSummaryModal.tsx(147L) | ExperienceSection.tsx(237L) | Footer.tsx(86L) | GenerativeArtwork.tsx(146L) | Hero.tsx(232L) | HomeView.tsx(30L) | KineticCanvas.tsx(251L) | LiveFPSMonitor.tsx(82L) | MagneticButton.tsx(66L) | MonetizationSection.tsx(158L) | Navbar.tsx(209L) | ProjectCard.tsx(131L) | ProjectDetailModal.tsx(263L) | ProjectShowcase.tsx(187L) | SpotlightCard.tsx(34L) | TechStackSection.tsx(160L)
+- **src/app/**: globals.css(207L) | layout.tsx(61L) | page.tsx(6L)
+- **src/components/**: AppProviders.tsx(137L) | CommandPalette.tsx(217L) | ExecutiveSummaryModal.tsx(147L) | ExperienceSection.tsx(237L) | Footer.tsx(86L) | GenerativeArtwork.tsx(265L) | Hero.tsx(150L) | HomeView.tsx(30L) | InteractiveAppPreview.tsx(320L) | KineticCanvas.tsx(251L) | LiveFPSMonitor.tsx(82L) | MagneticButton.tsx(66L) | MonetizationSection.tsx(228L) | Navbar.tsx(210L) | ProjectCard.tsx(142L) | ProjectDetailModal.tsx(263L) | ProjectShowcase.tsx(187L) | SpotlightCard.tsx(34L) | TechStackSection.tsx(160L)
 - **src/lib/**: utils.ts(39L)
 - **src/types/**: project.ts(137L)

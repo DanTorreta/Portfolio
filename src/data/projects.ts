@@ -83,13 +83,13 @@ export const WORK_EXPERIENCE: ExperienceItem[] = [
 
 export const PROJECTS_DATA: Project[] = [
   {
-    id: "crold-saas",
-    slug: "crold",
-    title: "Crold - SaaS de Gestión Integral & PWA para PYMEs y Talleres",
-    tagline: "Plataforma empresarial B2B con asistente IA para digitalización operativa, control horario y facturación.",
-    shortDescription: "Aplicación web y PWA full-stack diseñada para talleres mecánicos y pequeñas empresas: centraliza fichaje laboral geolocalizado, órdenes de trabajo, citas online, asistente conversacional con IA y facturación automatizada.",
+    id: "workshop-os-saas",
+    slug: "taller-gestion-saas",
+    title: "Workshop OS - Plataforma B2B & PWA para Talleres (Proyecto Privado)",
+    tagline: "Software empresarial B2B bajo acceso restringido para control operativo, fichaje laboral legal y facturación.",
+    shortDescription: "Aplicación web y PWA full-stack desarrollada para digitalización de talleres y PYMEs técnicas. Incluye fichaje laboral geolocalizado, órdenes de trabajo, portal de citas y facturación automatizada. Proyecto en fase privada con acceso restringido.",
     category: "SaaS B2B",
-    status: "Listo para Comercializar / Venta",
+    status: "Beta Privada",
     featured: true,
     completionPercentage: 95,
     problemStatement: {
@@ -102,7 +102,7 @@ export const PROJECTS_DATA: Project[] = [
       ]
     },
     solutionStatement: {
-      summary: "Crold resuelve el ciclo operativo completo mediante una PWA moderna instalable en cualquier dispositivo, sincronización en tiempo real y asistente con IA para consultas rápidas.",
+      summary: "Esta plataforma resuelve el ciclo operativo completo mediante una PWA moderna instalable en cualquier dispositivo, sincronización en tiempo real y asistente con IA para consultas rápidas.",
       benefits: [
         "Fichaje legal con geolocalización y generación de informes oficiales con 1 clic.",
         "Control exhaustivo de órdenes de trabajo con historial de vehículos y repuestos.",
@@ -186,9 +186,7 @@ export const PROJECTS_DATA: Project[] = [
       { label: "Ahorro de Gestión", value: "12h/semana por taller" }
     ],
     links: {
-      liveUrl: "https://crold.vercel.app",
-      demoUrl: "https://demo.crold.vercel.app",
-      githubUrl: "https://github.com/dani/crold"
+      // Proyecto en desarrollo privado: URLs omitidas para proteger confidencialidad
     },
     architecture: {
       topology: [
@@ -791,7 +789,7 @@ export const TECH_SKILLS: TechSkillCategory[] = [
         level: "Experto / Avanzado",
         badgeColor: "bg-blue-500/20 text-blue-300 border-blue-500/30",
         description: "Tipado estricto, arquitecturas full-stack modernas, asincronía, WebSockets y desarrollo frontend/backend.",
-        featuredIn: ["Crold", "Fidelización Comercios", "Recomendador Multimedia"],
+        featuredIn: ["Workshop OS (Privado)", "Fidelización Comercios", "Recomendador Multimedia"],
       },
       {
         name: "C# (.NET & Unity)",
@@ -819,7 +817,7 @@ export const TECH_SKILLS: TechSkillCategory[] = [
         level: "Avanzado / Experto",
         badgeColor: "bg-sky-500/20 text-sky-300 border-sky-500/30",
         description: "Modelado relacional complejo, optimización avanzada (query tuning, índices, planes de ejecución) en SQL Server, Oracle y PostgreSQL.",
-        featuredIn: ["Crold", "Suite Industrial", "Recomendador", "Balterra"],
+        featuredIn: ["Workshop OS (Privado)", "Suite Industrial", "Recomendador", "Balterra"],
       },
       {
         name: "Dart / Flutter",

@@ -128,3 +128,79 @@ body::before {
   background-color: #00FF94;
   color: #050505;
 }
+
+/* Light Theme Overrides (Apple / Stripe Daylight Studio) */
+html.light,
+.theme-light {
+  color-scheme: light;
+  background-color: #FAFAFA !important;
+  color: #52525B !important;
+}
+
+html.light body,
+.theme-light body {
+  background-color: #FAFAFA !important;
+  color: #52525B !important;
+}
+
+.theme-light body::before {
+  opacity: 0.015;
+}
+
+.theme-light h1,
+.theme-light h2,
+.theme-light h3,
+.theme-light h4,
+.theme-light .text-white {
+  color: #09090B !important;
+}
+
+.theme-light .text-zinc-400,
+.theme-light .text-zinc-500,
+.theme-light .text-zinc-300 {
+  color: #52525B !important;
+}
+
+.theme-light .bg-\[\#050505\],
+.theme-light .bg-\[\#09090B\],
+.theme-light .bg-\[\#09090B\]\/90,
+.theme-light .bg-\[\#09090B\]\/80,
+.theme-light .bg-\[\#09090B\]\/60,
+.theme-light .bg-\[\#09090B\]\/50,
+.theme-light .bg-\[\#09090B\]\/85,
+.theme-light .bg-\[\#09090B\]\/95,
+.theme-light .bg-\[\#070709\],
+.theme-light .bg-\[\#0a0a0c\],
+.theme-light .bg-\[\#060608\],
+.theme-light .bg-\[\#0A0A0E\],
+.theme-light .bg-\[\#121216\]\/60,
+.theme-light .bg-surface-1,
+.theme-light .bg-surface-1\/70,
+.theme-light .bg-surface-1\/80,
+.theme-light .bg-surface-1\/90 {
+  background-color: #FFFFFF !important;
+}
+
+.theme-light .border-white\/\[0\.08\],
+.theme-light .border-white\/\[0\.06\],
+.theme-light .border-white\/\[0\.05\],
+.theme-light .border-white\/\[0\.1\],
+.theme-light .border-white\/10,
+.theme-light .border-white\/15,
+.theme-light .border-white\/5 {
+  border-color: rgba(0, 0, 0, 0.08) !important;
+}
+
+.theme-light .bg-white\/\[0\.02\],
+.theme-light .bg-white\/\[0\.03\],
+.theme-light .bg-white\/\[0\.04\],
+.theme-light .bg-white\/5,
+.theme-light .bg-white\/10 {
+  background-color: rgba(0, 0, 0, 0.03) !important;
+}
+
+.theme-light .shadow-2xl,
+.theme-light .rounded-3xl,
+.theme-light .rounded-2xl {
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.07);
+}

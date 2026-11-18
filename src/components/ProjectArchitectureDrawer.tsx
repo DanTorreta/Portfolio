@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Project } from '@/types/project';
 import Link from 'next/link';
+import InteractiveAppPreview from './InteractiveAppPreview';
 
 interface ProjectArchitectureDrawerProps {
   project: Project | null;
@@ -12,7 +13,7 @@ interface ProjectArchitectureDrawerProps {
   onSelectForContact?: (projectName: string) => void;
 }
 
-type TabType = 'vision' | 'architecture' | 'tradeoffs';
+type TabType = 'demo' | 'architecture' | 'tradeoffs';
 
 export default function ProjectArchitectureDrawer({
   project,
@@ -20,7 +21,7 @@ export default function ProjectArchitectureDrawer({
   onClose,
   onSelectForContact,
 }: ProjectArchitectureDrawerProps) {
-  const [activeTab, setActiveTab] = useState<TabType>('architecture');
+  const [activeTab, setActiveTab] = useState<TabType>('demo');
   const [selectedNode, setSelectedNode] = useState<string | null>(null);
 
   // Close on ESC
@@ -174,19 +175,19 @@ export default function ProjectArchitectureDrawer({
                 </div>
               </div>
 
-              {/* Navigation Tabs */}
+              {/* Navigation Tabs (Progressive Technical Disclosure) */}
               <div className="flex items-center gap-2 mt-4 pt-3 border-t border-white/5">
                 {[
-                  { id: 'architecture', label: '[01] ARQUITECTURA DEL SISTEMA' },
-                  { id: 'tradeoffs', label: '[02] TRADE-OFFS & STACK' },
-                  { id: 'vision', label: '[03] VISIÓN & PRODUCTO' },
+                  { id: 'demo', label: '[01] DEMO & NEGOCIO' },
+                  { id: 'architecture', label: '[02] ARQUITECTURA & FLUJO' },
+                  { id: 'tradeoffs', label: '[03] STACK & RENDIMIENTO' },
                 ].map((tab) => (
                   <button
                     key={tab.id}
                     onClick={() => setActiveTab(tab.id as TabType)}
                     className={`px-3 py-1.5 rounded text-xs font-mono tracking-wider transition-colors ${
                       activeTab === tab.id
-                        ? 'bg-accent text-black font-semibold'
+                        ? 'bg-accent text-black font-semibold shadow-[0_0_12px_rgba(0,255,148,0.3)]'
                         : 'text-zinc-400 hover:text-white hover:bg-white/5'
                     }`}
                   >
@@ -419,9 +420,24 @@ export default function ProjectArchitectureDrawer({
                 </div>
               )}
 
-              {/* TAB 3: VISION & PRODUCT IMPACT */}
-              {activeTab === 'vision' && (
+              {/* TAB 1: DEMO INTERACTIVA & NEGOCIO */}
+              {activeTab === 'demo' && (
                 <div className="space-y-6">
+                  {/* Embedded Interactive Live Simulator */}
+                  <div className="p-4 rounded-2xl bg-black/50 border border-accent/20">
+                    <div className="flex items-center justify-between mb-3 text-xs font-mono">
+                      <span className="text-accent flex items-center gap-1.5 font-bold">
+                        <span>▶</span> SIMULADOR DEL PRODUCTO EN VIVO
+                      </span>
+                      <span className="text-[10px] text-zinc-400 bg-white/5 px-2 py-0.5 rounded border border-white/10">
+                        INTERACTÚA CON EL WIDGET
+                      </span>
+                    </div>
+                    <div className="h-56 rounded-xl overflow-hidden border border-white/10">
+                      <InteractiveAppPreview slug={project.slug} title={project.title} />
+                    </div>
+                  </div>
+
                   {/* Problem & Solution */}
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="p-5 rounded-xl bg-surface-1 border border-white/10 space-y-3">
